@@ -1,1 +1,1 @@
-# ai-skills-for-student
+# ai-skills-for-university
