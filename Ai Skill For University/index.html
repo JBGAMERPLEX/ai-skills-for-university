@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — AI Skills for University</title>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#F9754A',
+          },
+        },
+      },
+    }
+  </script>
+  
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    main h1, main h2, main h3, main h4 { color: #1e293b; }
+    main p, main li, main span, main label { color: #475569; }
+    main a:not([class*="bg-"]) { color: #F9754A; }
+    main a:not([class*="bg-"]):hover { text-decoration: underline; }
+    main article, main .bg-white { background-color: white; color: #1e293b; }
+    main [class*="border-dashed"] { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #64748b !important; }
+  </style>
+</head>
+
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+  <div id="navbar-placeholder"></div>
+
+  <main class="flex-grow">
+
+    <!-- ============================== -->
+    <!-- HERO SECTION                   -->
+    <!-- ============================== -->
+    <section class="relative overflow-hidden" style="background: linear-gradient(135deg, #FFF4ED 0%, #FFFFFF 50%, #FFE6D5 100%);">
+      <div class="absolute inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-40" style="background-color: #FECBAA;"></div>
+        <div class="absolute top-20 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-30" style="background-color: #FDA874;"></div>
+        <div class="absolute bottom-0 left-1/2 w-80 h-80 rounded-full blur-3xl opacity-20" style="background-color: #F9754A;"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 relative">
+
+        <h1 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"
+          data-i18n="home.heroTitle" data-i18n-html
+          class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6">
+          Learn AI skills —
+          <span style="background: linear-gradient(to right, #F9754A, #C14520); -webkit-background-clip: text; background-clip: text; color: transparent;">
+            no coding required.
+          </span>
+        </h1>
+
+        <p data-aos="fade-up" data-aos-delay="400" data-aos-duration="800"
+          data-i18n="home.heroDescription"
+          class="max-w-2xl text-lg text-slate-600 mb-10">
+          A friendly, step-by-step guide to using AI chat, image, and video tools in your studies and daily life.
+        </p>
+
+        <div data-aos="fade-up" data-aos-delay="600" data-aos-duration="800"
+          class="flex flex-col sm:flex-row gap-4 justify-start">
+<a href="aichat.html" data-i18n="home.startButton" 
+   class="inline-flex items-center justify-center px-6 py-3 rounded-lg text-white font-semibold shadow-lg transition hover:scale-105 bg-[#F9754A]" 
+   style="box-shadow: 0 10px 25px -5px rgba(249, 117, 74, 0.4);">
+   Start learning
+</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- INTRO TO AI (3 cards)          -->
+    <!-- ============================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-12">
+        <h2 data-aos="fade-up" class="text-3xl font-bold text-slate-900 mb-3">What you'll discover</h2>
+        <p data-aos="fade-up" data-aos-delay="100" class="text-slate-600 max-w-2xl mx-auto">
+          Three short modules designed to get you using AI confidently and responsibly.
+        </p>
+        <div data-aos="zoom-in" data-aos-delay="200" class="w-20 h-1 mx-auto mt-4 rounded-full" style="background-color: #F9754A;"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card 1: AI Chat -->
+        <div data-aos="fade-up" data-aos-delay="100"
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4 text-2xl" style="background-color: #FFE6D5; color: #F9754A;">💬</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">AI Chat</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            Learn how chatbots think, how to prompt them well, and where they can help in your studies.
+          </p>
+          <a href="aichat.html" class="inline-flex items-center gap-1 text-sm font-semibold hover:gap-2 transition-all" style="color: #F9754A;">
+            Learn more →
+          </a>
+        </div>
+        
+        <!-- Card 2: AI Image -->
+        <div data-aos="fade-up" data-aos-delay="200"
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4 text-2xl" style="background-color: #FFE6D5; color: #E85A2B;">🎨</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">AI Image</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            Turn your ideas into visuals with tools like DALL·E, Midjourney, and Stable Diffusion.
+          </p>
+          <a href="aiimage.html" class="inline-flex items-center gap-1 text-sm font-semibold hover:gap-2 transition-all" style="color: #F9754A;">
+            Learn more →
+          </a>
+        </div>
+        
+        <!-- Card 3: AI Video -->
+        <div data-aos="fade-up" data-aos-delay="300"
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+          <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-4 text-2xl" style="background-color: #FFE6D5; color: #C14520;">🎬</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">AI Video</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            Discover how AI can generate, edit, and enhance video content for your projects.
+          </p>
+          <a href="aivideo.html" class="inline-flex items-center gap-1 text-sm font-semibold hover:gap-2 transition-all" style="color: #F9754A;">
+            Learn more →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- FEATURES SECTION               -->
+    <!-- ============================== -->
+    <section class="py-16" style="background-color: #FFF4ED;">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 data-aos="fade-up" class="text-3xl font-bold text-slate-900 mb-3">Why learn AI skills?</h2>
+          <p data-aos="fade-up" data-aos-delay="100" class="text-slate-600 max-w-2xl mx-auto">
+            AI is transforming every field. Here's why you should start today.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div data-aos="zoom-in" data-aos-delay="100" class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="text-4xl mb-3">⚡</div>
+            <h3 class="font-bold text-slate-900 mb-2">Save Time</h3>
+            <p class="text-sm text-slate-600">Automate repetitive tasks and focus on what matters.</p>
+          </div>
+          <div data-aos="zoom-in" data-aos-delay="200" class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="text-4xl mb-3">💡</div>
+            <h3 class="font-bold text-slate-900 mb-2">Boost Creativity</h3>
+            <p class="text-sm text-slate-600">Generate ideas and explore new possibilities.</p>
+          </div>
+          <div data-aos="zoom-in" data-aos-delay="300" class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="text-4xl mb-3">🎯</div>
+            <h3 class="font-bold text-slate-900 mb-2">Better Results</h3>
+            <p class="text-sm text-slate-600">Produce higher quality work in less time.</p>
+          </div>
+          <div data-aos="zoom-in" data-aos-delay="400" class="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all">
+            <div class="text-4xl mb-3">🚀</div>
+            <h3 class="font-bold text-slate-900 mb-2">Future-Proof</h3>
+            <p class="text-sm text-slate-600">Stay ahead in your career with in-demand skills.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- LEARNING PATH SECTION (NEW)    -->
+    <!-- ============================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-12">
+        <h2 data-aos="fade-up" class="text-3xl font-bold text-slate-900 mb-3">Your learning path</h2>
+        <p data-aos="fade-up" data-aos-delay="100" class="text-slate-600 max-w-2xl mx-auto">
+          Follow these simple steps to master AI tools in just one afternoon.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div data-aos="fade-up" data-aos-delay="100" class="relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4" style="background-color: #F9754A;">1</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">Learn the basics</h3>
+          <p class="text-sm text-slate-600">Start with AI Chat to understand how prompts work.</p>
+          <div class="hidden md:block absolute top-10 -right-3 text-2xl" style="color: #FECBAA;">→</div>
+        </div>
+        
+        <div data-aos="fade-up" data-aos-delay="200" class="relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4" style="background-color: #E85A2B;">2</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">Explore visuals</h3>
+          <p class="text-sm text-slate-600">Move to AI Image to create stunning visuals.</p>
+          <div class="hidden md:block absolute top-10 -right-3 text-2xl" style="color: #FECBAA;">→</div>
+        </div>
+        
+        <div data-aos="fade-up" data-aos-delay="300" class="relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4" style="background-color: #C14520;">3</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">Create videos</h3>
+          <p class="text-sm text-slate-600">Try AI Video to bring your ideas to life.</p>
+          <div class="hidden md:block absolute top-10 -right-3 text-2xl" style="color: #FECBAA;">→</div>
+        </div>
+        
+        <div data-aos="fade-up" data-aos-delay="400" class="bg-white rounded-2xl p-6 shadow-sm border-2" style="border-color: #F9754A;">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg mb-4" style="background: linear-gradient(135deg, #F9754A, #C14520);">4</div>
+          <h3 class="font-semibold text-lg text-slate-900 mb-2">Practice!</h3>
+          <p class="text-sm text-slate-600">Join our hands-on Workshop to apply your skills.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- CTA SECTION                    -->
+    <!-- ============================== -->
+    <section class="py-16" style="background-color: #F9754A;">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 data-aos="fade-up" class="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to start your AI journey?</h2>
+        <p data-aos="fade-up" data-aos-delay="100" class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+          Join thousands of students already using AI to boost their learning and creativity.
+        </p>
+        <div data-aos="zoom-in" data-aos-delay="200" class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="workshop.html" class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-white font-bold shadow-xl hover:scale-105 transition-all" style="color: #F9754A;">
+            🚀 Start Workshop Now
+          </a>
+          <a href="comparison.html" class="inline-flex items-center justify-center px-8 py-4 rounded-full border-2 border-white text-white font-bold hover:bg-white hover:text-orange-500 transition-all">
+            Compare Tools
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        easing: 'ease-out-cubic',
+        once: true,
+        offset: 80,
+      });
+    }
+  </script>
+</body>
+</html>

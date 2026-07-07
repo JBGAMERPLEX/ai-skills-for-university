@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — AI Skills for University</title>
+  
+  <!-- ⭐ Config สี: มีแค่ primary สีเดียว -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#F9754A', // ← สีเดียว ล็อกเลย!
+          },
+        },
+      },
+    }
+  </script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  /* Fix สีให้เนื้อหา readable ทุกหน้า */
+  main h1, main h2, main h3, main h4 { color: #1e293b; }
+  main p, main li, main span, main label { color: #475569; }
+  main a:not([class*="bg-"]) { color: #F9754A; }
+  main a:not([class*="bg-"]):hover { text-decoration: underline; }
+  
+  /* Card พื้นขาว ขอบเทา */
+  main article, main .bg-white { background-color: white; color: #1e293b; }
+  
+  /* Placeholder boxes */
+  main [class*="border-dashed"] { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #64748b !important; }
+  
+  /* Primary button override */
+  main a[href*="html"].inline-flex,
+  main button.inline-flex {
+    background-color: #F9754A !important;
+    color: white !important;
+    border: none !important;
+  }
+  main a[href*="html"].inline-flex:hover,
+  main button.inline-flex:hover {
+    opacity: 0.9;
+  }
+  
+  /* Secondary button (ขาว) */
+  main a.border.inline-flex {
+    background-color: white !important;
+    color: #F9754A !important;
+    border: 2px solid #F9754A !important;
+  }
+</style>
+</head>
+<!-- ✅ แบบใหม่: ธีมส้ม-ขาว ไม่มี dark mode -->
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+  <div id="navbar-placeholder"></div>
+
+  <main class="flex-grow">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="bg-gradient-to-br from-fuchsia-600 via-pink-600 to-rose-600 text-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <p class="text-pink-200 text-sm font-medium uppercase tracking-wider mb-3">Module 3</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold mb-5">AI Video 🎬</h1>
+        <p class="text-lg text-pink-100 max-w-3xl leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Create professional videos,
+          animations, and presentations with AI — no camera or editing skills required.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT IS AI VIDEO ============ -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-slate-900 mb-4">What can AI video tools do?</h2>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. AI video tools can generate
+            video clips from text, animate still images, create talking avatars, and even edit
+            footage automatically.
+          </p>
+          <p class="text-slate-600 leading-relaxed">
+            Ut enim ad minim veniam. Perfect for explainer videos, social media content,
+            presentations, and creative projects.
+          </p>
+        </div>
+        <!-- Video placeholder -->
+        <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500">
+          <svg class="w-16 h-16 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+          <p class="text-xs text-slate-400 mt-1">Example AI-generated video</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POPULAR TOOLS GRID ============ -->
+    <section class="bg-white py-16 border-y border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-slate-900 mb-3">Popular AI video tools</h2>
+          <p class="text-slate-600 max-w-2xl mx-auto">
+            Lorem ipsum dolor sit amet. Each tool specialises in different types of video creation.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <!-- Tool 1 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-purple-200 via-fuchsia-200 to-pink-200 flex items-center justify-center">
+              <span class="text-6xl">🎥</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Runway</h3>
+              <p class="text-xs text-slate-500 mb-2">Freemium</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Generate video from text or images. Great for
+                cinematic clips and creative experiments.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tool 2 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 flex items-center justify-center">
+              <span class="text-6xl">👤</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Synthesia</h3>
+              <p class="text-xs text-slate-500 mb-2">Paid · from $22/mo</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Create videos with realistic AI avatars that speak
+                your script in 120+ languages.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tool 3 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-emerald-200 via-teal-200 to-cyan-200 flex items-center justify-center">
+              <span class="text-6xl">⚡</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Pika Labs</h3>
+              <p class="text-xs text-slate-500 mb-2">Free tier · Discord-based</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Fast text-to-video generation with fun animation
+                effects and style transfers.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tool 4 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-amber-200 via-orange-200 to-red-200 flex items-center justify-center">
+              <span class="text-6xl">🎞️</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Luma Dream Machine</h3>
+              <p class="text-xs text-slate-500 mb-2">Free tier</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. High-quality video generation with realistic motion
+                and physics.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tool 5 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-rose-200 via-pink-200 to-fuchsia-200 flex items-center justify-center">
+              <span class="text-6xl">🎬</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">HeyGen</h3>
+              <p class="text-xs text-slate-500 mb-2">Freemium</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. AI avatars for presentations and training videos.
+                Easy drag-and-drop editor.
+              </p>
+            </div>
+          </article>
+
+          <!-- Tool 6 -->
+          <article class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-slate-200 via-gray-300 to-zinc-300 flex items-center justify-center">
+              <span class="text-6xl">📹</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Descript</h3>
+              <p class="text-xs text-slate-500 mb-2">Freemium</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. AI-powered video editing — edit video by editing
+                the transcript like a document.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP-BY-STEP WORKFLOW ============ -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-slate-900 mb-3">Create your first AI video in 5 steps</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto">Lorem ipsum dolor sit amet — follow this workflow to go from idea to finished video.</p>
+      </div>
+
+      <div class="space-y-10">
+
+        <!-- Step 1 -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-block px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-xs font-semibold mb-2">Step 1</span>
+            <h3 class="font-semibold text-xl text-slate-900 mb-2">Choose your tool &amp; goal</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+              Lorem ipsum dolor sit amet. Decide what type of video you need:
+            </p>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• <strong>Text-to-video:</strong> Runway, Pika, Luma</li>
+              <li>• <strong>Talking avatar:</strong> Synthesia, HeyGen</li>
+              <li>• <strong>Editing automation:</strong> Descript</li>
+            </ul>
+          </div>
+          <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500">
+            <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+            <p class="text-xs text-slate-400 mt-1">Screenshot: tool selection</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500 md:order-2">
+            <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+            <p class="text-xs text-slate-400 mt-1">Screenshot: prompt interface</p>
+          </div>
+          <div class="md:order-1">
+            <span class="inline-block px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-xs font-semibold mb-2">Step 2</span>
+            <h3 class="font-semibold text-xl text-slate-900 mb-2">Write your prompt or script</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+              Lorem ipsum dolor sit amet. For text-to-video, describe the scene:
+            </p>
+            <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm text-slate-700 italic">
+              "A student studying late at night, warm lamp light, time-lapse of pages turning"
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-block px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-xs font-semibold mb-2">Step 3</span>
+            <h3 class="font-semibold text-xl text-slate-900 mb-2">Generate &amp; preview</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+              Lorem ipsum dolor sit amet. Most tools generate 3–10 second clips. Watch the preview
+              and decide if you want to regenerate with tweaked wording.
+            </p>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Tip: Be patient — video generation takes longer than images (30–120 seconds).
+            </p>
+          </div>
+          <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500">
+            <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+            <p class="text-xs text-slate-400 mt-1">Preview: generated clip</p>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500 md:order-2">
+            <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+            <p class="text-xs text-slate-400 mt-1">Screenshot: video editor timeline</p>
+          </div>
+          <div class="md:order-1">
+            <span class="inline-block px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-xs font-semibold mb-2">Step 4</span>
+            <h3 class="font-semibold text-xl text-slate-900 mb-2">Edit &amp; combine clips</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+              Lorem ipsum dolor sit amet. Use the tool's built-in editor or export to software
+              like CapCut, DaVinci Resolve, or iMovie to:
+            </p>
+            <ul class="text-sm text-slate-600 space-y-1">
+              <li>• Stitch multiple clips together</li>
+              <li>• Add music and sound effects</li>
+              <li>• Include text overlays and captions</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-block px-3 py-1 bg-fuchsia-100 text-fuchsia-700 rounded-full text-xs font-semibold mb-2">Step 5</span>
+            <h3 class="font-semibold text-xl text-slate-900 mb-2">Export &amp; share</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-3">
+              Lorem ipsum dolor sit amet. Export in the highest quality (usually 1080p or 4K).
+              Save your project files in case you need to make edits later.
+            </p>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Don't forget to credit the AI tool if you're sharing publicly or submitting for
+              coursework.
+            </p>
+          </div>
+          <div class="aspect-video rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500">
+            <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <p class="text-sm font-medium">Video Placeholder [16:9]</p>
+            <p class="text-xs text-slate-400 mt-1">Screenshot: export settings</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============ VIDEO GALLERY ============ -->
+    <section class="bg-slate-900 text-white py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-bold mb-3">Example video projects</h2>
+          <p class="text-slate-300">Lorem ipsum dolor sit amet — see what students have created with AI video tools.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Explainer Video</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Social Media Reel</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Presentation Intro</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Animation</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Tutorial</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+          <div class="group">
+            <div class="aspect-video rounded-xl bg-gradient-to-br from-fuchsia-500 to-violet-600 flex items-center justify-center mb-3">
+              <svg class="w-16 h-16 text-white/70 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <h3 class="font-semibold text-white mb-1">Creative Art</h3>
+            <p class="text-sm text-slate-400">Lorem ipsum dolor sit amet</p>
+          </div>
+
+        </div>
+
+        <div class="mt-10 text-center">
+          <a href="comparison.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 font-semibold rounded-lg hover:bg-fuchsia-50 transition">
+            Next: Compare Tools →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

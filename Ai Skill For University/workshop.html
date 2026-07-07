@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — AI Skills for University</title>
+  
+  <!-- ⭐ Config สี: มีแค่ primary สีเดียว -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#F9754A', // ← สีเดียว ล็อกเลย!
+          },
+        },
+      },
+    }
+  </script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  /* Fix สีให้เนื้อหา readable ทุกหน้า */
+  main h1, main h2, main h3, main h4 { color: #1e293b; }
+  main p, main li, main span, main label { color: #475569; }
+  main a:not([class*="bg-"]) { color: #F9754A; }
+  main a:not([class*="bg-"]):hover { text-decoration: underline; }
+  
+  /* Card พื้นขาว ขอบเทา */
+  main article, main .bg-white { background-color: white; color: #1e293b; }
+  
+  /* Placeholder boxes */
+  main [class*="border-dashed"] { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #64748b !important; }
+  
+  /* Primary button override */
+  main a[href*="html"].inline-flex,
+  main button.inline-flex {
+    background-color: #F9754A !important;
+    color: white !important;
+    border: none !important;
+  }
+  main a[href*="html"].inline-flex:hover,
+  main button.inline-flex:hover {
+    opacity: 0.9;
+  }
+  
+  /* Secondary button (ขาว) */
+  main a.border.inline-flex {
+    background-color: white !important;
+    color: #F9754A !important;
+    border: 2px solid #F9754A !important;
+  }
+</style>
+</head>
+<!-- ✅ แบบใหม่: ธีมส้ม-ขาว ไม่มี dark mode -->
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+  <div id="navbar-placeholder"></div>
+
+  <main class="flex-grow">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <p class="text-emerald-200 text-sm font-medium uppercase tracking-wider mb-3">Hands-on Learning</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold mb-5">Interactive Workshop 🛠️</h1>
+        <p class="text-lg text-emerald-100 max-w-3xl leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Put your new skills to the test! 
+          Complete the pre-test, follow the guided exercises, and reflect on what you've learned.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ PART 1: PRE-TEST ============ -->
+    <section id="pretest" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">1</span>
+        <h2 class="text-3xl font-bold text-slate-900">Pre-Test</h2>
+      </div>
+      <p class="text-slate-600 mb-8">Lorem ipsum dolor sit amet. Let's gauge your current understanding of AI before we begin. Don't worry, this isn't graded!</p>
+
+      <form id="pretest-form" class="space-y-6">
+        <!-- Question 1 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="font-semibold text-slate-900 mb-4">1. What is a "prompt" in the context of AI?</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q1" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">A type of computer virus</span>
+            </label>
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q1" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">The instruction given to the AI</span>
+            </label>
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q1" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">The AI's final output</span>
+            </label>
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q1" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">A programming language</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="font-semibold text-slate-900 mb-4">2. If an AI chatbot gives you a factual claim, you should:</h3>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q2" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">Trust it completely</span>
+            </label>
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-emerald-400 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50 transition">
+              <input type="radio" name="pre_q2" class="mr-3 text-emerald-600 focus:ring-emerald-500" />
+              <span class="text-sm text-slate-700">Verify it with external sources</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="button" id="submit-pretest" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition shadow-lg shadow-emerald-600/20">
+          Submit &amp; Start Workshop →
+        </button>
+      </form>
+    </section>
+
+    <!-- ============ PART 2: HANDS-ON WORKSHOP ============ -->
+    <section id="workshop" class="bg-white border-y border-slate-100 py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="flex-shrink-0 w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-lg">2</span>
+          <h2 class="text-3xl font-bold text-slate-900">Guided Exercises</h2>
+        </div>
+        <p class="text-slate-600 mb-12">Lorem ipsum dolor sit amet. Follow these three practical exercises to build your AI muscle memory.</p>
+
+        <div class="space-y-12">
+          
+          <!-- Exercise 1 -->
+          <div class="relative pl-8 border-l-4 border-emerald-200">
+            <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-emerald-500 border-4 border-white"></div>
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Exercise 1 · AI Chat</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">The "Role-Task-Format" Prompt</h3>
+              <p class="text-slate-600 text-sm mb-4">Lorem ipsum dolor sit amet. Practice structuring your prompt to get the exact output you need for an assignment.</p>
+              
+              <div class="bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                <p class="text-xs font-semibold text-slate-500 mb-2">YOUR TASK:</p>
+                <p class="text-sm text-slate-800">Ask the AI to act as a <strong>biology tutor</strong>, explain <strong>photosynthesis</strong>, and format it as a <strong>3-point bulleted list</strong>.</p>
+              </div>
+
+              <div class="aspect-[16/6] bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-400 text-sm">
+                [ Interactive Prompt Input Placeholder ]
+              </div>
+            </div>
+          </div>
+
+          <!-- Exercise 2 -->
+          <div class="relative pl-8 border-l-4 border-teal-200">
+            <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-teal-500 border-4 border-white"></div>
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <span class="text-xs font-bold text-teal-700 uppercase tracking-wider">Exercise 2 · AI Image</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Style Transfer &amp; Iteration</h3>
+              <p class="text-slate-600 text-sm mb-4">Lorem ipsum dolor sit amet. Learn how changing just one or two adjectives completely transforms an AI image.</p>
+              
+              <div class="bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                <p class="text-xs font-semibold text-slate-500 mb-2">YOUR TASK:</p>
+                <p class="text-sm text-slate-800">Generate a "university library". First prompt: <em>realistic photography</em>. Second prompt: <em>cyberpunk illustration</em>. Compare the results.</p>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="aspect-square bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-400 text-xs text-center p-2">
+                  Image 1 Placeholder<br/>(Realistic)
+                </div>
+                <div class="aspect-square bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-400 text-xs text-center p-2">
+                  Image 2 Placeholder<br/>(Cyberpunk)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Exercise 3 -->
+          <div class="relative pl-8 border-l-4 border-cyan-200">
+            <div class="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-cyan-500 border-4 border-white"></div>
+            <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100">
+              <span class="text-xs font-bold text-cyan-700 uppercase tracking-wider">Exercise 3 · AI Video</span>
+              <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Animate a Concept</h3>
+              <p class="text-slate-600 text-sm mb-4">Lorem ipsum dolor sit amet. Use an image-to-video tool to bring a static picture to life with subtle motion.</p>
+              
+              <div class="bg-white p-4 rounded-lg border border-slate-200 mb-4">
+                <p class="text-xs font-semibold text-slate-500 mb-2">YOUR TASK:</p>
+                <p class="text-sm text-slate-800">Upload an image of a landscape and prompt the AI to add "gentle wind blowing through the trees and moving clouds".</p>
+              </div>
+
+              <div class="aspect-video bg-slate-100 border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-400 text-sm">
+                <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Video Output Placeholder [16:9]
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PART 3: POST-TEST & REFLECTION ============ -->
+    <section id="posttest" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="flex items-center gap-3 mb-8">
+        <span class="flex-shrink-0 w-10 h-10 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center font-bold text-lg">3</span>
+        <h2 class="text-3xl font-bold text-slate-900">Post-Test &amp; Reflection</h2>
+      </div>
+      <p class="text-slate-600 mb-8">Lorem ipsum dolor sit amet. Now that you've completed the exercises, let's see how your understanding has evolved.</p>
+
+      <form class="space-y-6">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="font-semibold text-slate-900 mb-4">1. Which element is MOST important for getting a specific visual style from an Image AI?</h3>
+          <div class="space-y-2">
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-cyan-400 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 transition">
+              <input type="radio" name="post_q1" class="mr-3 text-cyan-600 focus:ring-cyan-500" />
+              <span class="text-sm text-slate-700">Using all capital letters</span>
+            </label>
+            <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:border-cyan-400 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 transition">
+              <input type="radio" name="post_q1" class="mr-3 text-cyan-600 focus:ring-cyan-500" />
+              <span class="text-sm text-slate-700">Adding descriptive style keywords (e.g., "cinematic", "watercolour")</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <h3 class="font-semibold text-slate-900 mb-4">2. Reflection: How do you plan to use AI in your specific major or daily studies?</h3>
+          <textarea rows="4" class="w-full p-3 border border-slate-200 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-sm text-slate-700" placeholder="Type your thoughts here... (Lorem ipsum dolor sit amet)"></textarea>
+        </div>
+
+        <button type="button" class="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-800 transition shadow-lg">
+          Complete Workshop 🎉
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  
+  <!-- Simple scroll logic for Pre-test submission -->
+  <script>
+    document.getElementById('submit-pretest')?.addEventListener('click', () => {
+      document.getElementById('workshop').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
