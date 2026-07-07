@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home — AI Skills for University</title>
+  
+  <!-- ⭐ Config สี: มีแค่ primary สีเดียว -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#F9754A', // ← สีเดียว ล็อกเลย!
+          },
+        },
+      },
+    }
+  </script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  /* Fix สีให้เนื้อหา readable ทุกหน้า */
+  main h1, main h2, main h3, main h4 { color: #1e293b; }
+  main p, main li, main span, main label { color: #475569; }
+  main a:not([class*="bg-"]) { color: #F9754A; }
+  main a:not([class*="bg-"]):hover { text-decoration: underline; }
+  
+  /* Card พื้นขาว ขอบเทา */
+  main article, main .bg-white { background-color: white; color: #1e293b; }
+  
+  /* Placeholder boxes */
+  main [class*="border-dashed"] { background-color: #f8fafc !important; border-color: #cbd5e1 !important; color: #64748b !important; }
+  
+  /* Primary button override */
+  main a[href*="html"].inline-flex,
+  main button.inline-flex {
+    background-color: #F9754A !important;
+    color: white !important;
+    border: none !important;
+  }
+  main a[href*="html"].inline-flex:hover,
+  main button.inline-flex:hover {
+    opacity: 0.9;
+  }
+  
+  /* Secondary button (ขาว) */
+  main a.border.inline-flex {
+    background-color: white !important;
+    color: #F9754A !important;
+    border: 2px solid #F9754A !important;
+  }
+</style>
+</head>
+<!-- ✅ แบบใหม่: ธีมส้ม-ขาว ไม่มี dark mode -->
+<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+  <div id="navbar-placeholder"></div>
+
+  <main class="flex-grow">
+
+    <!-- ============ PAGE HERO ============ -->
+    <section class="bg-gradient-to-br from-indigo-600 to-violet-700 text-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        <p class="text-indigo-200 text-sm font-medium uppercase tracking-wider mb-3">Module 1</p>
+        <h1 class="text-4xl sm:text-5xl font-extrabold mb-5">AI Chat 🤖💬</h1>
+        <p class="text-lg text-indigo-100 max-w-3xl leading-relaxed">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Text-based AIs can help
+          you brainstorm, summarise readings, draft emails, and explain tricky concepts —
+          if you know how to talk to them.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT IS AI CHAT ============ -->
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-slate-900 mb-4">What is an AI chat tool?</h2>
+          <p class="text-slate-600 leading-relaxed mb-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. These tools are trained on huge
+            amounts of text and learn to predict what word should come next.
+          </p>
+          <p class="text-slate-600 leading-relaxed">
+            Ut enim ad minim veniam, quis nostrud exercitation. Think of them as a very
+            well-read study buddy — fast, helpful, but sometimes confidently wrong.
+          </p>
+        </div>
+        <!-- Image placeholder -->
+        <div class="aspect-[4/3] rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-500">
+          <svg class="w-14 h-14 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <p class="text-sm font-medium">Image Placeholder [4:3]</p>
+          <p class="text-xs text-slate-400 mt-1">Illustration: chat UI concept</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POPULAR TOOLS GRID ============ -->
+    <section class="bg-white py-16 border-y border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-slate-900 mb-3">Popular AI chat tools</h2>
+          <p class="text-slate-600 max-w-2xl mx-auto">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Here are six tools
+            students use most — each with its own strengths.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Tool card template (repeated 6x) -->
+          <!-- Card 1 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+              <span class="text-5xl">🟢</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">ChatGPT</h3>
+              <p class="text-xs text-slate-500 mb-2">by OpenAI</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Great all-rounder
+                for writing, explanations, and coding help.
+              </p>
+            </div>
+          </article>
+          <!-- Card 2 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center">
+              <span class="text-5xl">🟠</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Claude</h3>
+              <p class="text-xs text-slate-500 mb-2">by Anthropic</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Excellent for long-form reading, careful
+                analysis, and thoughtful conversations.
+              </p>
+            </div>
+          </article>
+          <!-- Card 3 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-blue-100 to-sky-100 flex items-center justify-center">
+              <span class="text-5xl">🔵</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Gemini</h3>
+              <p class="text-xs text-slate-500 mb-2">by Google</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Tightly integrated with Google tools —
+                great if you already live in Gmail and Docs.
+              </p>
+            </div>
+          </article>
+          <!-- Card 4 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-indigo-100 to-violet-100 flex items-center justify-center">
+              <span class="text-5xl">🟣</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Perplexity</h3>
+              <p class="text-xs text-slate-500 mb-2">Perplexity AI</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Combines chat with live web citations — ideal
+                for research and fact-checking.
+              </p>
+            </div>
+          </article>
+          <!-- Card 5 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-cyan-100 to-blue-100 flex items-center justify-center">
+              <span class="text-5xl">💠</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">Copilot</h3>
+              <p class="text-xs text-slate-500 mb-2">by Microsoft</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. Built into Windows, Edge, and Office —
+                handy for everyday productivity.
+              </p>
+            </div>
+          </article>
+          <!-- Card 6 -->
+          <article class="group bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition">
+            <div class="aspect-video bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
+              <span class="text-5xl">🔴</span>
+            </div>
+            <div class="p-5">
+              <h3 class="font-semibold text-lg text-slate-900 mb-1">DeepSeek</h3>
+              <p class="text-xs text-slate-500 mb-2">DeepSeek</p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Lorem ipsum dolor sit amet. A strong open-source option with excellent
+                reasoning for math and coding.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROMPTING TIPS ============ -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-slate-900 mb-3">6 tips for better prompts ✨</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto">
+          Lorem ipsum dolor sit amet. A good prompt is the difference between a useless
+          answer and a genuinely helpful one.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="p-6 rounded-2xl bg-indigo-50 border border-indigo-100">
+          <div class="text-2xl mb-2">🎯</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Be specific</h3>
+          <p class="text-sm text-slate-600">Lorem ipsum dolor sit amet — tell the AI exactly what you want.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-violet-50 border border-violet-100">
+          <div class="text-2xl mb-2">🎭</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Give a role</h3>
+          <p class="text-sm text-slate-600">"Act as a study tutor" changes the tone and depth of the reply.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-fuchsia-50 border border-fuchsia-100">
+          <div class="text-2xl mb-2">📐</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Set the format</h3>
+          <p class="text-sm text-slate-600">Ask for bullet points, tables, or a 150-word summary — you're in control.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-emerald-50 border border-emerald-100">
+          <div class="text-2xl mb-2">🧩</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Give examples</h3>
+          <p class="text-sm text-slate-600">Show the AI one good example of what you want and it will follow your style.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-amber-50 border border-amber-100">
+          <div class="text-2xl mb-2">🔄</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Iterate, don't restart</h3>
+          <p class="text-sm text-slate-600">Refine your request in the same chat — the AI remembers the context.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-rose-50 border border-rose-100">
+          <div class="text-2xl mb-2">🔍</div>
+          <h3 class="font-semibold text-slate-900 mb-1">Verify the output</h3>
+          <p class="text-sm text-slate-600">AI can invent facts. Always cross-check anything that matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STEP-BY-STEP TUTORIAL ============ -->
+    <section class="bg-slate-900 text-white py-16">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-3">Your first AI chat in 4 steps</h2>
+          <p class="text-slate-300 max-w-2xl mx-auto">Lorem ipsum dolor sit amet — follow this simple workflow.</p>
+        </div>
+
+        <ol class="space-y-6">
+          <li class="flex gap-5 items-start bg-slate-800/60 rounded-2xl p-6 border border-slate-700">
+            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold">1</span>
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg mb-1">Pick a tool &amp; make an account</h3>
+              <p class="text-slate-300 text-sm">Lorem ipsum dolor sit amet. ChatGPT, Claude or Gemini all have free tiers — start there.</p>
+            </div>
+          </li>
+          <li class="flex gap-5 items-start bg-slate-800/60 rounded-2xl p-6 border border-slate-700">
+            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold">2</span>
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg mb-1">Write your first prompt</h3>
+              <p class="text-slate-300 text-sm">Lorem ipsum dolor sit amet. Try: "Explain quantum entanglement like I'm 15, in 3 bullet points."</p>
+            </div>
+          </li>
+          <li class="flex gap-5 items-start bg-slate-800/60 rounded-2xl p-6 border border-slate-700">
+            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold">3</span>
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg mb-1">Refine the answer</h3>
+              <p class="text-slate-300 text-sm">Lorem ipsum dolor sit amet. Say things like "shorter", "more examples", or "give me sources".</p>
+            </div>
+          </li>
+          <li class="flex gap-5 items-start bg-slate-800/60 rounded-2xl p-6 border border-slate-700">
+            <span class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold">4</span>
+            <div class="flex-1">
+              <h3 class="font-semibold text-lg mb-1">Save &amp; reuse your best prompts</h3>
+              <p class="text-slate-300 text-sm">Lorem ipsum dolor sit amet. Build a personal library of prompts that work well for your courses.</p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="mt-10 text-center">
+          <a href="aiimage.html" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 font-semibold rounded-lg hover:bg-indigo-50 transition">
+            Next: AI Image →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

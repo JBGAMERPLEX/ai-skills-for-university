@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Home",
+    "aiChat": "AI Chat",
+    "aiImage": "AI Image",
+    "aiVideo": "AI Video",
+    "comparison": "Comparison & Pricing",
+    "workshop": "Workshop",
+    "credits": "Credits",
+    "language": "Language"
+  },
+  "home": {
+    "badge": "🎓 Built for university students",
+    "heroTitle": "Learn AI skills — <span style='background: linear-gradient(to right, #F9754A, #C14520); -webkit-background-clip: text; background-clip: text; color: transparent;'>no coding required</span>",
+    "heroDescription": "A friendly, step-by-step guide to using AI chat, image, and video tools in your studies and daily life.",
+    "startButton": "Start learning"
+  },
+  "comparison": {
+    "heroSubtitle": "Make the right choice",
+    "heroTitle": "Compare AI Tools ⚖️",
+    "heroDescription": "Not sure which tool to start with? Compare popular AI tools side-by-side and find what fits your needs and budget.",
+    "vsTitle": "🥊 AI vs AI Comparison",
+    "vsSubtitle": "Select two tools to compare them side-by-side",
+    "tool1Label": "Tool 1",
+    "tool2Label": "Tool 2",
+    "selectPlaceholder": "Select a tool...",
+    "compareBtn": "Compare Now",
+    "detailedComparison": "Detailed Comparison",
+    "featureCol": "Feature",
+    "chatTitle": "💬 AI Chat Tools",
+    "chatDesc": "Text-based AIs for writing, research, coding, and learning",
+    "imageTitle": "🎨 AI Image Tools",
+    "imageDesc": "Generate stunning visuals from text descriptions",
+    "videoTitle": "🎬 AI Video Tools",
+    "videoDesc": "Create videos from text, images, or scripts",
+    "freeTier": "Free Tier",
+    "paidPlan": "Paid Plan",
+    "bestFor": "Best For",
+    "strengths": "Strengths",
+    "categoryChat": "AI Chat",
+    "categoryImage": "AI Image",
+    "categoryVideo": "AI Video",
+    "alertBoth": "Please select both tools to compare",
+    "alertDifferent": "Please select two different tools"
+  },
+  "footer": {
+    "title": "AI Skills for University",
+    "aboutText": "A friendly, non-technical introduction to AI tools for university students. Learn to use chat, image, and video generators responsibly.",
+    "explore": "Explore",
+    "team": "Our Team",
+    "viewCredits": "View full credits →",
+    "madeWith": "Made with ❤️ for learners everywhere"
+  },
+  "common": {
+    "copyright": "All rights reserved"
+  }
+}
