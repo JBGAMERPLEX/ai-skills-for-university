@@ -1,7 +1,14 @@
 // ===== โหลด Component =====
 async function loadComponent(id, file) {
     try {
-        const response = await fetch(`../components/${file}`);
+        // ตรวจสอบว่าเราอยู่ในโฟลเดอร์ย่อยหรือไม่
+        const isSubfolder = window.location.pathname.includes('/portfolio/') || 
+                           window.location.pathname.includes('/reports/') || 
+                           window.location.pathname.includes('/slides/') || 
+                           window.location.pathname.includes('/thesis/');
+        
+        const path = isSubfolder ? `../components/${file}` : `components/${file}`;
+        const response = await fetch(path);
         const html = await response.text();
         document.getElementById(id).innerHTML = html;
     } catch (error) {
