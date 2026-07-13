@@ -1,97 +1,21 @@
-<nav class="sticky top-0 z-50 shadow-lg" style="background-color: #F9754A;">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-
-      <!-- Logo -->
-      <a href="index.html" class="flex items-center gap-2 group">
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white font-bold text-lg shadow-md group-hover:scale-105 group-hover:rotate-3 transition-all" style="color: #F9754A;">
-          AI
-        </span>
-        <span class="font-semibold text-white text-lg hidden sm:block">AI Skills for University</span>
-      </a>
-
-      <!-- Desktop Menu (Grid ปรับแล้ว) -->
-      <ul class="hidden lg:flex items-center gap-1.5" id="nav-links">
-        <li><a href="index.html"      data-page="index.html"      class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.home">Home</a></li>
-        <li><a href="aichat.html"     data-page="aichat.html"     class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.aiChat">AI Chat</a></li>
-        <li><a href="aiimage.html"    data-page="aiimage.html"    class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.aiImage">AI Image</a></li>
-        <li><a href="aivideo.html"    data-page="aivideo.html"    class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.aiVideo">AI Video</a></li>
-        <li><a href="comparison.html" data-page="comparison.html" class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.comparison">Comparison</a></li>
-        <li><a href="workshop.html"   data-page="workshop.html"   class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.workshop">Workshop</a></li>
-        <li><a href="credits.html"    data-page="credits.html"    class="nav-link inline-flex items-center justify-center px-3 py-1.5 rounded-full text-white font-medium text-xs border transition-all duration-300 hover:bg-white hover:text-orange-500 hover:-translate-y-0.5 hover:shadow-lg" style="background-color: rgba(255,255,255,0.15); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);" data-i18n="nav.credits">Credits</a></li>
-      </ul>
-
-      <!-- Right actions -->
-      <div class="flex items-center gap-3">
-
-        <!-- CTA Button (Desktop) -->
-        <a href="workshop.html" class="hidden lg:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white font-semibold text-sm shadow-md hover:shadow-xl hover:scale-105 transition-all duration-200" style="color: #F9754A;">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-          Start Learning
+<nav class="navbar">
+    <div class="logo">
+        <a href="../index.html" class="logo-link">
+            <span class="logo-text">AI Skills</span>
+            <span class="logo-sub">for University</span>
         </a>
-
-        <!-- Language Dropdown -->
-        <div class="hidden lg:block relative">
-          <button id="lang-dropdown-btn" type="button"
-            class="inline-flex items-center gap-2 px-3 py-2 rounded-full backdrop-blur-sm border transition-all duration-200 hover:scale-105"
-            style="background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white;"
-            aria-haspopup="true" aria-expanded="false">
-            <span class="text-base leading-none">🇹🇭</span>
-            <span class="font-semibold text-sm">TH</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-          </button>
-
-          <div id="lang-dropdown-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
-            <button type="button" data-lang-option="th" class="lang-option w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 text-left transition-colors">
-              <span>🇹🇭</span><span>ไทย</span>
-            </button>
-            <button type="button" data-lang-option="en" class="lang-option w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 text-left transition-colors">
-              <span>🇺🇸</span><span>English</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Mobile Hamburger -->
-        <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-md text-white hover:bg-white/10" aria-label="Menu">
-          <svg id="icon-open"  class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <svg id="icon-close" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
     </div>
-  </div>
-
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="lg:hidden hidden border-t border-white/20" style="background-color: #F9754A;">
-    <ul class="px-4 py-3 space-y-1" id="mobile-nav-links">
-      <li><a href="index.html"      data-page="index.html"      class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.home">Home</a></li>
-      <li><a href="aichat.html"     data-page="aichat.html"     class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.aiChat">AI Chat</a></li>
-      <li><a href="aiimage.html"    data-page="aiimage.html"    class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.aiImage">AI Image</a></li>
-      <li><a href="aivideo.html"    data-page="aivideo.html"    class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.aiVideo">AI Video</a></li>
-      <li><a href="comparison.html" data-page="comparison.html" class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.comparison">Comparison</a></li>
-      <li><a href="workshop.html"   data-page="workshop.html"   class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.workshop">Workshop</a></li>
-      <li><a href="credits.html"    data-page="credits.html"    class="nav-link-mobile block px-4 py-3 rounded-xl text-white font-medium transition-all duration-200 hover:bg-white/15 hover:translate-x-1" data-i18n="nav.credits">Credits</a></li>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="../index.html">หน้าแรก</a></li>
+        <li><a href="../portfolio/index.html">พอร์ตโฟลิโอ</a></li>
+        <li><a href="../reports/index.html">รายงาน</a></li>
+        <li><a href="../slides/index.html">สไลด์</a></li>
+        <li><a href="../thesis/index.html">ธีสิส/โปรเจกต์</a></li>
+        <li><a href="../credits.html">ทีมงาน</a></li>
     </ul>
-    
-    <!-- Mobile CTA Button -->
-    <div class="px-4 pb-3">
-      <a href="workshop.html" class="flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white font-semibold text-sm shadow-md" style="color: #F9754A;">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        Start Learning
-      </a>
-    </div>
-
-    <div class="px-4 pb-4 pt-2 border-t border-white/20">
-      <p class="text-xs font-semibold text-white/80 uppercase mb-2">Language</p>
-      <div class="grid grid-cols-2 gap-2">
-        <button type="button" data-lang-option="th" class="py-2 rounded-lg border border-white/30 bg-white/10 text-white text-sm hover:bg-white/20 transition">🇹🇭 TH</button>
-        <button type="button" data-lang-option="en" class="py-2 rounded-lg border border-white/30 bg-white/10 text-white text-sm hover:bg-white/20 transition">🇺🇸 EN</button>
-      </div>
-    </div>
-  </div>
 </nav>

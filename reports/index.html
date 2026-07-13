@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายงาน - AI Skills</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h1>📄 รายงาน</h1>
+            <p>AI ที่เน้นการวิเคราะห์ข้อมูล การจัดโครงสร้างเนื้อหา และการเขียนที่สละสลวย</p>
+        </div>
+
+        <!-- ===== ปุ่มเลือกรูปแบบตาข่าย (แสดงโลโก้ + ชื่อสั้น) ===== -->
+        <div class="ai-grid" id="aiGrid">
+            <div class="ai-grid-item" data-target="claude">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/claude.jpg" alt="Claude 3">
+                </div>
+                <span class="ai-grid-name">Claude</span>
+            </div>
+
+            <div class="ai-grid-item" data-target="chatgpt">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/chatgpt.jpg" alt="ChatGPT">
+                </div>
+                <span class="ai-grid-name">ChatGPT</span>
+            </div>
+
+            <div class="ai-grid-item" data-target="perplexity">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/perplexity.jpg" alt="Perplexity">
+                </div>
+                <span class="ai-grid-name">Perplexity</span>
+            </div>
+        </div>
+
+        <!-- ===== รายละเอียดแบบขยาย (ซ่อนไว้ก่อน) ===== -->
+        <div class="ai-details" id="aiDetails">
+            <div class="ai-detail-item" data-target="claude" style="display:none;">
+                <a href="claude.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/claude.jpg" alt="Claude 3">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">Claude 3 (Anthropic)</span>
+                        <span class="ai-desc">วิเคราะห์เอกสารขนาดใหญ่และเขียนรายงานเชิงลึก</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="ai-detail-item" data-target="chatgpt" style="display:none;">
+                <a href="chatgpt.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/chatgpt.jpg" alt="ChatGPT">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">ChatGPT (Plus/Data Analysis)</span>
+                        <span class="ai-desc">วิเคราะห์ข้อมูลและวางโครงสร้างรายงาน</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="ai-detail-item" data-target="perplexity" style="display:none;">
+                <a href="perplexity.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/perplexity.jpg" alt="Perplexity AI">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">Perplexity AI</span>
+                        <span class="ai-desc">ค้นหาข้อมูลพร้อมแหล่งอ้างอิงที่เชื่อถือได้</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="../index.html">← กลับไปหน้าแรก</a>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridItems = document.querySelectorAll('.ai-grid-item');
+            const detailItems = document.querySelectorAll('.ai-detail-item');
+            let activeTarget = null;
+
+            gridItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const target = this.dataset.target;
+
+                    // ถ้าเลือกตัวเดิม → ไปที่หน้า
+                    if (activeTarget === target) {
+                        const link = document.querySelector(`.ai-detail-item[data-target="${target}"] a`);
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                        return;
+                    }
+
+                    // ซ่อนทั้งหมด
+                    detailItems.forEach(d => d.style.display = 'none');
+
+                    // แสดงตัวที่เลือก
+                    const selected = document.querySelector(`.ai-detail-item[data-target="${target}"]`);
+                    if (selected) {
+                        selected.style.display = 'block';
+                        activeTarget = target;
+                    }
+
+                    // Highlight ปุ่มที่เลือก
+                    gridItems.forEach(g => g.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

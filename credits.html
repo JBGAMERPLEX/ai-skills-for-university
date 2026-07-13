@@ -1,218 +1,80 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Credits — AI Skills for University</title>
-  <meta name="description" content="Meet the team behind the AI Skills for University project." />
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#F9754A',
-          },
-        },
-      },
-    }
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทีมงาน - AI Skills</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-white text-gray-800 min-h-screen flex flex-col">
+<body>
+    <div id="navbar"></div>
 
-  <div id="navbar-placeholder"></div>
-
-  <main class="flex-grow">
-
-    <!-- ============ HERO SECTION ============ -->
-<section class="py-10" style="background-color: #F9754A;">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <p class="text-white/90 text-xs sm:text-sm uppercase tracking-wider mb-2">🎓 คณะเทคโนโลยีสารสนเทศ · สาขาเทคโนโลยีมัลติมีเดีย · ปี 66</p>
-    <h1 class="text-3xl sm:text-4xl font-extrabold text-white">ทีมงานเบื้องหลัง 🌟</h1>
-  </div>
-</section>
-
-    <!-- ============ TEAM LIST (Horizontal Cards) ============ -->
-    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="space-y-4">
-
-        <!-- Member 1: กฤษณ์ คุณวงค์ -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440108.jpg" 
-                 alt="กฤษณ์ คุณวงค์"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">ก</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">กฤษณ์ คุณวงค์</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440108</span>
-            </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">AI Chat Researcher</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบค้นคว้าข้อมูลเครื่องมือ AI Chat ทุกตัว ตั้งแต่ ChatGPT, Claude, Gemini 
-              รวมถึงเทคนิคการเขียน Prompt ที่มีประสิทธิภาพ
-            </p>
-          </div>
+    <main class="content-page">
+        <div class="page-header">
+            <h1>ทีมผู้จัดทำ</h1>
+            <p>จากคณะเทคโนโลยีสารสนเทศ สาขาเทคโนโลยีมัลติมีเดีย</p>
         </div>
 
-        <!-- Member 2: ชลสิทธิ์ บัวคํา (LEAD) -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-            <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440114.jpg" 
-                 alt="ชลสิทธิ์ บัวคํา"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-200"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-200 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #F9754A, #C14520);">ช</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">ชลสิทธิ์ บัวคํา</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440114</span>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="images/team/66124440114.jpg" alt="ชลสิทธิ์ บัวคำ" class="avatar">
+                <h3>ชลสิทธิ์ บัวคำ</h3>
+                <p class="student-id">รหัส 66124440114</p>
+                <p>พัฒนาเว็บไซต์และโครงสร้างระบบ</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Web Developer & System Architect</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">Web Designer &amp; Lead Developer</p>
-            <p class="text-sm text-gray-600 leading-relaxed mb-3">
-              ออกแบบ UI/UX ของเว็บไซต์ทั้งหมด เขียนโค้ดระบบ Multilingual 
-              ตกแต่งหน้าเว็บ และดูแลภาพรวมโปรเจกต์
-            </p>
-            <a href="https://www.facebook.com/Thedeklnw007/" target="_blank" rel="noopener noreferrer" 
-               class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-white text-xs font-medium hover:opacity-90 transition" 
-               style="background-color: #1877F2;">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.685.234 2.685.234v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-              Facebook
-            </a>
-          </div>
-        </div>
 
-        <!-- Member 3: ชนกานต์ พานทอง -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440121.jpg" 
-                 alt="ชนกานต์ พานทอง"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">ช</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">ชนกานต์ พานทอง</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440121</span>
+            <div class="team-member">
+                <img src="images/team/66124440124.jpg" alt="วิศรุต มาสะอาด" class="avatar">
+                <h3>วิศรุต มาสะอาด</h3>
+                <p class="student-id">รหัส 66124440124</p>
+                <p>พัฒนาเว็บไซต์และจัดการเนื้อหา</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Web Developer & Content Manager</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">AI Image Researcher</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบค้นคว้าข้อมูลเครื่องมือ AI Image ทุกตัว เช่น Midjourney, DALL·E 3, 
-              Stable Diffusion และเทคนิคการเขียน Prompt สร้างภาพ
-            </p>
-          </div>
-        </div>
 
-        <!-- Member 4: นัฐชนน คำวิลัย -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440122.jpg" 
-                 alt="นัฐชนน คำวิลัย"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">น</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">นัฐชนน คำวิลัย</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440122</span>
+            <div class="team-member">
+                <img src="images/team/66124440131.jpg" alt="ธาริตกรณ์ แสงสว่าง" class="avatar">
+                <h3>ธาริตกรณ์ แสงสว่าง</h3>
+                <p class="student-id">รหัส 66124440131</p>
+                <p>ควบคุมคุณภาพและสรุปข้อมูล</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Quality Control & Data Synthesis</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">AI Video Researcher</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบค้นคว้าข้อมูลเครื่องมือ AI Video เช่น Runway, Synthesia, Pika Labs 
-              รวมถึงเทคนิคการสร้างวิดีโอจากข้อความและภาพ
-            </p>
-          </div>
-        </div>
 
-        <!-- Member 5: วิศรุต มาสะอาด -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440124.jpg" 
-                 alt="วิศรุต มาสะอาด"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">ว</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">วิศรุต มาสะอาด</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440124</span>
+            <div class="team-member">
+                <img src="images/team/66124440121.jpg" alt="ชนกานต์ พานทอง" class="avatar">
+                <h3>ชนกานต์ พานทอง</h3>
+                <p class="student-id">รหัส 66124440121</p>
+                <p>ค้นคว้า ทดสอบ เก็บข้อมูล และสร้างสื่อตัวอย่าง</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Research & Media Creation</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">Comparison &amp; Pricing Analyst</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบเปรียบเทียบฟีเจอร์ ข้อจำกัด และราคาของแต่ละเครื่องมือ AI 
-              พร้อมจัดทำตารางเปรียบเทียบที่อ่านง่ายสำหรับนักศึกษา
-            </p>
-          </div>
-        </div>
 
-        <!-- Member 6: ธาริตกรณ์ แสงสว่าง -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440131.jpg" 
-                 alt="ธาริตกรณ์ แสงสว่าง"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">ฐ</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">ธาริตกรณ์ แสงสว่าง</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440131</span>
+            <div class="team-member">
+                <img src="images/team/66124440132.jpg" alt="ชัชวาลย์ เทียนสิงห์" class="avatar">
+                <h3>ชัชวาลย์ เทียนสิงห์</h3>
+                <p class="student-id">รหัส 66124440132</p>
+                <p>ค้นคว้า ทดสอบ เก็บข้อมูล และสร้างสื่อตัวอย่าง</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Research & Media Creation</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">Workshop Designer</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบออกแบบ Workshop แบบ Hands-on พร้อมจัดทำ Pre-Test และ Post-Test 
-              เพื่อวัดความเข้าใจของผู้เรียนก่อนและหลังเรียน
-            </p>
-          </div>
-        </div>
 
-        <!-- Member 7: ชัชวาลย์ เทียนสิงห์ -->
-        <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-5 hover:shadow-md hover:-translate-y-0.5 transition duration-300">
-          <div class="flex-shrink-0 relative">
-            <img src="images/team/66124440132.jpg" 
-                 alt="ชัชวาลย์ เทียนสิงห์"
-                 class="w-20 h-20 rounded-full object-cover shadow-md ring-2 ring-orange-100"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="w-20 h-20 rounded-full items-center justify-center text-white text-2xl font-bold shadow-md ring-2 ring-orange-100 absolute top-0 left-0" 
-                 style="display: none; background: linear-gradient(135deg, #FB8647, #F9754A);">ช</div>
-          </div>
-          <div class="flex-grow min-w-0">
-            <div class="flex flex-wrap items-baseline gap-2 mb-1">
-              <h3 class="text-lg font-bold text-gray-900">ชัชวาลย์ เทียนสิงห์</h3>
-              <span class="text-xs text-gray-400 font-mono">66124440132</span>
+            <div class="team-member">
+                <img src="images/team/66124440122.jpg" alt="นัฐชนน คำวิลัย" class="avatar">
+                <h3>นัฐชนน คำวิลัย</h3>
+                <p class="student-id">รหัส 66124440122</p>
+                <p>ค้นคว้า ทดสอบ เก็บข้อมูล และสร้างสื่อตัวอย่าง</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Research & Media Creation</p>
             </div>
-            <p class="font-medium text-sm mb-2" style="color: #F9754A;">Content Writer &amp; QA Tester</p>
-            <p class="text-sm text-gray-600 leading-relaxed">
-              รับผิดชอบเขียนเนื้อหาทุกหน้าให้เข้าใจง่าย เป็นมิตรกับผู้เรียน 
-              พร้อมทดสอบระบบทุกหน้าเพื่อตรวจสอบความถูกต้อง
-            </p>
-          </div>
+
+            <div class="team-member">
+                <img src="images/team/66124440108.jpg" alt="กฤษณ์ คุณวงค์" class="avatar">
+                <h3>กฤษณ์ คุณวงค์</h3>
+                <p class="student-id">รหัส 66124440108</p>
+                <p>ค้นคว้า ทดสอบ เก็บข้อมูล และสร้างสื่อตัวอย่าง</p>
+                <p style="font-size:0.8rem; color:#999; margin-top:0.2rem;">Research & Media Creation</p>
+            </div>
         </div>
+    </main>
 
-      </div>
-    </section>
-
-  </main>
-
-  <div id="footer-placeholder"></div>
-  <script src="js/i18n.js"></script>
-  <script src="js/main.js"></script>
+    <div id="footer"></div>
+    <script src="js/main.js"></script>
 </body>
 </html>

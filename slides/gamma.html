@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamma - สไลด์</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <a href="index.html" class="back-btn">← กลับไปหน้าหมวดหมู่</a>
+            <h1>✨ Gamma (gamma.app)</h1>
+            <p>ตัวท็อปสำหรับการทำสไลด์ด้วย AI ที่ได้รับความนิยมสูงสุดในปัจจุบัน</p>
+        </div>
+
+        <!-- ===== STEPPER / PROGRESS ===== -->
+        <div class="stepper-wrapper">
+            <div class="stepper-progress">
+                <div class="stepper-bar" id="stepperBar" style="width: 0%;"></div>
+            </div>
+            <div class="stepper-steps" id="stepperSteps">
+                <span class="step-dot active" data-step="1">1</span>
+                <span class="step-dot" data-step="2">2</span>
+                <span class="step-dot" data-step="3">3</span>
+                <span class="step-dot" data-step="4">4</span>
+                <span class="step-dot" data-step="5">5</span>
+            </div>
+        </div>
+
+        <!-- ===== SLIDES CONTAINER ===== -->
+        <div class="slides-container" id="slidesContainer">
+            <!-- Slide 1: ภาพรวม -->
+            <div class="slide active" data-slide="1">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 1/5</span>
+                    <h2>📌 ภาพรวม Gamma</h2>
+                    <p>
+                        Gamma เป็นเครื่องมือสร้างสไลด์พรีเซนเทชันด้วย AI ที่ได้รับความนิยมสูงสุดในปัจจุบัน 
+                        เพราะสามารถเปลี่ยนหัวข้อหรือเนื้อหาที่คุณมีให้กลายเป็นสไลด์ที่ออกแบบมาอย่างสวยงาม 
+                        พร้อมนำเสนอได้ทันที โดยไม่ต้องเสียเวลาจัดวางเลย์เอาต์หรือเลือกรูปแบบเอง
+                    </p>
+                    <p>
+                        จุดเด่นของ Gamma คือความสามารถในการสร้างสไลด์ได้หลายรูปแบบ ไม่ว่าจะเป็น 
+                        พรีเซนเทชัน (Presentation), เอกสาร (Document), หรือหน้าเว็บ (Webpage) 
+                        ทำให้เหมาะสำหรับการใช้งานที่หลากหลาย
+                    </p>
+                    <div class="slide-image">
+                        <img src="https://via.placeholder.com/600x300/e85800/ffffff?text=Gamma+Overview" alt="Gamma ภาพรวม">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: ฟีเจอร์เด่น -->
+            <div class="slide" data-slide="2">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 2/5</span>
+                    <h2>⚡ ฟีเจอร์เด่น</h2>
+                    <ul class="feature-list">
+                        <li>
+                            <strong>สร้างสไลด์อัตโนมัติ:</strong> 
+                            เพียงใส่หัวข้อหรือร่างเนื้อหา AI จะสร้างสไลด์ที่สมบูรณ์ให้คุณ 
+                            ทั้งเนื้อหาและภาพประกอบ
+                        </li>
+                        <li>
+                            <strong>ออกแบบสวยงาม:</strong> 
+                            สไลด์ที่สร้างออกมามีดีไซน์ที่ทันสมัย สวยงาม และเป็นมืออาชีพ 
+                            พร้อมนำเสนอได้ทันที
+                        </li>
+                        <li>
+                            <strong>ปรับแต่งง่าย:</strong> 
+                            แก้ไขและปรับแต่งเนื้อหาได้แบบ Real-time พร้อมเห็นผลลัพธ์ทันที
+                        </li>
+                        <li>
+                            <strong>หลายรูปแบบ:</strong> 
+                            รองรับการสร้างทั้ง Presentation, Document และ Webpage 
+                            ให้เลือกตามความเหมาะสม
+                        </li>
+                        <li>
+                            <strong>AI Image Generator:</strong> 
+                            สามารถสร้างภาพประกอบในสไลด์ด้วย AI ได้โดยตรง 
+                            ไม่ต้องไปหารูปภาพจากที่อื่น
+                        </li>
+                    </ul>
+                    <div class="slide-image">
+                        <img src="https://via.placeholder.com/600x200/e85800/ffffff?text=Gamma+Features" alt="Gamma ฟีเจอร์">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: ตัวอย่างสื่อ -->
+            <div class="slide" data-slide="3">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 3/5</span>
+                    <h2>📷 ตัวอย่างสื่อและวีดิโอสอน</h2>
+                    <div class="slide-media-grid">
+                        <div class="slide-media-item">
+                            <img src="https://via.placeholder.com/400x250/e85800/ffffff?text=Gamma+Slides+Example" alt="Gamma ตัวอย่างสไลด์">
+                            <span class="media-label">📷 ตัวอย่างสไลด์ที่สร้างด้วย Gamma</span>
+                        </div>
+                        <div class="slide-media-item">
+                            <video controls>
+                                <source src="#" type="video/mp4">
+                                <p>วิดีโอแนะนำ Gamma</p>
+                            </video>
+                            <span class="media-label">🎬 วีดิโอสอนใช้งาน Gamma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: วิธีใช้งาน -->
+            <div class="slide" data-slide="4">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 4/5</span>
+                    <h2>📖 วิธีเริ่มต้นใช้งาน Gamma</h2>
+                    <ol class="howto-list">
+                        <li>เข้าสู่เว็บไซต์ <a href="https://gamma.app" target="_blank">Gamma.app</a> และสมัครสมาชิก (มีให้ใช้งานฟรี)</li>
+                        <li>คลิกปุ่ม "Create new" และเลือกประเภทที่ต้องการ (Presentation, Document, หรือ Webpage)</li>
+                        <li>พิมพ์หัวข้อหรือร่างเนื้อหาที่ต้องการให้ AI สร้างสไลด์</li>
+                        <li>เลือกธีมและสไตล์ที่ชอบ แล้วกด "Generate"</li>
+                        <li>รอ AI สร้างสไลด์ให้คุณ จากนั้นปรับแต่งเนื้อหาและรูปภาพตามต้องการ</li>
+                        <li>เมื่อพอใจแล้ว กด "Present" เพื่อนำเสนอ หรือ "Export" เพื่อดาวน์โหลด</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Slide 5: ลิงก์และดำเนินการ -->
+            <div class="slide" data-slide="5">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 5/5</span>
+                    <h2>🚀 เริ่มต้นใช้งานทันที</h2>
+                    <p>พร้อมแล้วไปเริ่มสร้างสไลด์กันเลย!</p>
+                    <div class="slide-actions">
+                        <a href="https://gamma.app" target="_blank" class="btn">🔗 ไปที่ Gamma</a>
+                        <a href="#" class="btn btn-outline">▶ ดูวิดีโอสอนเพิ่ม</a>
+                        <a href="#" class="btn btn-outline">📥 ดาวน์โหลดเอกสาร</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== NAVIGATION BUTTONS ===== -->
+        <div class="slide-nav">
+            <button class="slide-nav-btn prev-btn" id="prevBtn" disabled>← ย้อนกลับ</button>
+            <span class="slide-counter" id="slideCounter">1 / 5</span>
+            <button class="slide-nav-btn next-btn" id="nextBtn">ถัดไป →</button>
+        </div>
+
+        <!-- ===== COMPLETE BUTTON ===== -->
+        <div class="slide-complete" id="slideComplete" style="display: none;">
+            <p>✅ เรียนรู้ครบทุกขั้นตอนแล้ว!</p>
+            <a href="index.html" class="btn">กลับไปหน้าหมวดหมู่</a>
+        </div>
+
+    </main>
+
+    <div id="footer"></div>
+    <script src="../js/main.js"></script>
+
+<!-- ===== SLIDE SCRIPT ===== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 1;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        const stepperBar = document.getElementById('stepperBar');
+        const stepDots = document.querySelectorAll('.step-dot');
+        const slideComplete = document.getElementById('slideComplete');
+
+        function goToSlide(slideNumber) {
+            if (slideNumber < 1) slideNumber = 1;
+            if (slideNumber > totalSlides) slideNumber = totalSlides;
+
+            currentSlide = slideNumber;
+
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            const activeSlide = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+            if (activeSlide) {
+                activeSlide.classList.add('active');
+            }
+
+            slideCounter.textContent = `${currentSlide} / ${totalSlides}`;
+
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            stepperBar.style.width = `${progress}%`;
+
+            stepDots.forEach(dot => {
+                const step = parseInt(dot.dataset.step);
+                dot.classList.remove('active', 'completed');
+                if (step === currentSlide) {
+                    dot.classList.add('active');
+                } else if (step < currentSlide) {
+                    dot.classList.add('completed');
+                }
+            });
+
+            prevBtn.disabled = (currentSlide === 1);
+
+            if (currentSlide === totalSlides) {
+                nextBtn.style.display = 'none';
+                slideComplete.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                slideComplete.style.display = 'none';
+            }
+
+            // 🔥 ไม่มี scrollIntoView แล้ว - ผู้ใช้เลื่อนเอง
+        }
+
+        prevBtn.addEventListener('click', function() {
+            goToSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', function() {
+            goToSlide(currentSlide + 1);
+        });
+
+        stepDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const step = parseInt(this.dataset.step);
+                goToSlide(step);
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
+                goToSlide(currentSlide - 1);
+            }
+        });
+
+        goToSlide(1);
+    });
+</script>
+</body>
+</html>

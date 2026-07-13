@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ธีสิส/โปรเจกต์ - AI Skills</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <h1>🎓 ธีสิส / วิทยานิพนธ์ / โปรเจกต์จบ</h1>
+            <p>งานวิชาการที่เน้นความถูกต้อง การทบทวนวรรณกรรม และการหลีกเลี่ยงข้อมูลที่ AI ปั้นแต่งขึ้น</p>
+        </div>
+
+        <!-- ===== ปุ่มเลือกรูปแบบตาข่าย (แสดงโลโก้ + ชื่อสั้น) ===== -->
+        <div class="ai-grid" id="aiGrid">
+            <div class="ai-grid-item" data-target="scispase">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/scispase.jpg" alt="SciSpace">
+                </div>
+                <span class="ai-grid-name">SciSpace</span>
+            </div>
+
+            <div class="ai-grid-item" data-target="consensus">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/consensus.jpg" alt="Consensus">
+                </div>
+                <span class="ai-grid-name">Consensus</span>
+            </div>
+
+            <div class="ai-grid-item" data-target="elicit">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/elicit.jpg" alt="Elicit">
+                </div>
+                <span class="ai-grid-name">Elicit</span>
+            </div>
+
+            <div class="ai-grid-item" data-target="quillbot">
+                <div class="ai-grid-icon">
+                    <img src="../images/ai-icons/quillbot.jpg" alt="QuillBot">
+                </div>
+                <span class="ai-grid-name">QuillBot</span>
+            </div>
+        </div>
+
+        <!-- ===== รายละเอียดแบบขยาย (ซ่อนไว้ก่อน) ===== -->
+        <div class="ai-details" id="aiDetails">
+            <div class="ai-detail-item" data-target="scispase" style="display:none;">
+                <a href="scispase.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/scispase.jpg" alt="SciSpace">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">SciSpace (Typeset.io)</span>
+                        <span class="ai-desc">อ่านและวิเคราะห์งานวิจัย PDF ด้วย AI</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="ai-detail-item" data-target="consensus" style="display:none;">
+                <a href="consensus.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/consensus.jpg" alt="Consensus">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">Consensus</span>
+                        <span class="ai-desc">ค้นหาคำตอบจากงานวิจัยจริงเท่านั้น</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="ai-detail-item" data-target="elicit" style="display:none;">
+                <a href="elicit.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/elicit.jpg" alt="Elicit">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">Elicit</span>
+                        <span class="ai-desc">ทบทวนวรรณกรรมและสกัดข้อมูลงานวิจัย</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+
+            <div class="ai-detail-item" data-target="quillbot" style="display:none;">
+                <a href="quillbot.html" class="ai-btn">
+                    <div class="ai-btn-image">
+                        <img src="../images/ai-icons/quillbot.jpg" alt="QuillBot">
+                    </div>
+                    <div class="ai-btn-info">
+                        <span class="ai-name">QuillBot</span>
+                        <span class="ai-desc">เกลาภาษาและตรวจแกรมมาร์ระดับวิชาการ</span>
+                    </div>
+                    <span class="ai-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="../index.html">← กลับไปหน้าแรก</a>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+    <script src="../js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const gridItems = document.querySelectorAll('.ai-grid-item');
+            const detailItems = document.querySelectorAll('.ai-detail-item');
+            let activeTarget = null;
+
+            gridItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    const target = this.dataset.target;
+
+                    // ถ้าเลือกตัวเดิม → ไปที่หน้า
+                    if (activeTarget === target) {
+                        const link = document.querySelector(`.ai-detail-item[data-target="${target}"] a`);
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                        return;
+                    }
+
+                    // ซ่อนทั้งหมด
+                    detailItems.forEach(d => d.style.display = 'none');
+
+                    // แสดงตัวที่เลือก
+                    const selected = document.querySelector(`.ai-detail-item[data-target="${target}"]`);
+                    if (selected) {
+                        selected.style.display = 'block';
+                        activeTarget = target;
+                    }
+
+                    // Highlight ปุ่มที่เลือก
+                    gridItems.forEach(g => g.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
