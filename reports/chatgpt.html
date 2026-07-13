@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT - รายงาน</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="content-page">
+        <div class="page-header">
+            <a href="index.html" class="back-btn">← กลับไปหน้าหมวดหมู่</a>
+            <h1>🤖 ChatGPT (Plus/Data Analysis)</h1>
+            <p>วางโครงสร้างรายงาน สรุปเนื้อหา และวิเคราะห์ข้อมูลดิบได้อย่างมีประสิทธิภาพ</p>
+        </div>
+
+        <!-- ===== STEPPER / PROGRESS ===== -->
+        <div class="stepper-wrapper">
+            <div class="stepper-progress">
+                <div class="stepper-bar" id="stepperBar" style="width: 0%;"></div>
+            </div>
+            <div class="stepper-steps" id="stepperSteps">
+                <span class="step-dot active" data-step="1">1</span>
+                <span class="step-dot" data-step="2">2</span>
+                <span class="step-dot" data-step="3">3</span>
+                <span class="step-dot" data-step="4">4</span>
+                <span class="step-dot" data-step="5">5</span>
+            </div>
+        </div>
+
+        <!-- ===== SLIDES CONTAINER ===== -->
+        <div class="slides-container" id="slidesContainer">
+            <!-- Slide 1: ภาพรวม -->
+            <div class="slide active" data-slide="1">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 1/5</span>
+                    <h2>📌 ภาพรวม ChatGPT Data Analysis</h2>
+                    <p>
+                        ChatGPT เวอร์ชัน Plus พร้อมฟีเจอร์ Data Analysis (เดิมชื่อ Code Interpreter) 
+                        เป็นเครื่องมือที่ทรงพลังสำหรับการจัดทำรายงาน เพราะสามารถวิเคราะห์ข้อมูลดิบ 
+                        วางโครงสร้างรายงาน และสร้างภาพสรุปข้อมูลได้อย่างมืออาชีพ
+                    </p>
+                    <p>
+                        จุดเด่นของฟีเจอร์นี้คือความสามารถในการอัปโหลดไฟล์ Excel, CSV, หรือ PDF 
+                        แล้วให้ AI วิเคราะห์ข้อมูล คำนวณทางสถิติ และสร้างกราฟเพื่อประกอบรายงาน 
+                        โดยไม่ต้องเขียนโค้ดเอง
+                    </p>
+                    <div class="slide-image">
+                        <img src="https://via.placeholder.com/600x300/e85800/ffffff?text=ChatGPT+Data+Analysis+Overview" alt="ChatGPT Data Analysis ภาพรวม">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: ฟีเจอร์เด่น -->
+            <div class="slide" data-slide="2">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 2/5</span>
+                    <h2>⚡ ฟีเจอร์เด่น</h2>
+                    <ul class="feature-list">
+                        <li>
+                            <strong>วิเคราะห์ข้อมูลดิบ:</strong> 
+                            อัปโหลดไฟล์ Excel/CSV แล้วให้ AI วิเคราะห์ข้อมูล สรุปสถิติ 
+                            และหาแนวโน้มที่สำคัญ พร้อมอธิบายผลลัพธ์
+                        </li>
+                        <li>
+                            <strong>วางโครงสร้างรายงาน:</strong> 
+                            ช่วยวางโครงสร้างและเค้าโครงของรายงานอย่างเป็นระบบ 
+                            พร้อมแนะนำหัวข้อและเนื้อหาที่ควรมีในแต่ละส่วน
+                        </li>
+                        <li>
+                            <strong>สร้างกราฟและแผนภูมิ:</strong> 
+                            สร้างกราฟ แผนภูมิ และอินโฟกราฟิกจากข้อมูลที่อัปโหลด 
+                            เพื่อใช้ประกอบรายงานให้ดูน่าสนใจ
+                        </li>
+                        <li>
+                            <strong>เขียนสรุปเชิงลึก:</strong> 
+                            สรุปข้อมูลเชิงลึกและนำเสนอในรูปแบบที่เข้าใจง่าย 
+                            พร้อมข้อเสนอแนะจากข้อมูลที่วิเคราะห์ได้
+                        </li>
+                        <li>
+                            <strong>ประมวลผลข้อมูลซับซ้อน:</strong> 
+                            สามารถจัดการกับข้อมูลที่มีความซับซ้อน เช่น การคำนวณทางสถิติ 
+                            การวิเคราะห์แนวโน้ม และการพยากรณ์ข้อมูล
+                        </li>
+                    </ul>
+                    <div class="slide-image">
+                        <img src="https://via.placeholder.com/600x200/e85800/ffffff?text=ChatGPT+Features" alt="ChatGPT ฟีเจอร์">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: ตัวอย่างสื่อ -->
+            <div class="slide" data-slide="3">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 3/5</span>
+                    <h2>📷 ตัวอย่างสื่อ</h2>
+                    <div class="slide-media-grid">
+                        <div class="slide-media-item">
+                            <img src="https://via.placeholder.com/400x250/e85800/ffffff?text=ChatGPT+Data+Analysis" alt="ChatGPT วิเคราะห์ข้อมูล">
+                            <span class="media-label">📷 ตัวอย่างการวิเคราะห์ข้อมูลด้วย ChatGPT</span>
+                        </div>
+                        <div class="slide-media-item">
+                            <img src="https://via.placeholder.com/400x250/ff7a2f/ffffff?text=ChatGPT+Report+Structure" alt="ChatGPT โครงสร้างรายงาน">
+                            <span class="media-label">📊 ตัวอย่างการวางโครงสร้างรายงาน</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: วิธีใช้งาน -->
+            <div class="slide" data-slide="4">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 4/5</span>
+                    <h2>📖 วิธีเริ่มต้นใช้งาน ChatGPT Data Analysis</h2>
+                    <ol class="howto-list">
+                        <li>เข้าสู่เว็บไซต์ <a href="https://chat.openai.com" target="_blank">ChatGPT.com</a> และสมัครสมาชิกเวอร์ชัน Plus</li>
+                        <li>เลือกโมเดล "GPT-4" และเปิดใช้งานฟีเจอร์ "Data Analysis"</li>
+                        <li>อัปโหลดไฟล์ข้อมูลที่ต้องการวิเคราะห์ (Excel, CSV, PDF, หรือภาพ)</li>
+                        <li>พิมพ์คำสั่งหรือคำถามที่ต้องการ เช่น "วิเคราะห์ยอดขายรายเดือนและสรุปแนวโน้ม"</li>
+                        <li>รอให้ ChatGPT ประมวลผล จากนั้นตรวจสอบผลลัพธ์และกราฟที่สร้างขึ้น</li>
+                        <li>นำข้อมูลและกราฟที่ได้ไปใช้ในรายงานของคุณ หรือให้ ChatGPT ช่วยเขียนเนื้อหารายงานต่อ</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Slide 5: ลิงก์และดำเนินการ -->
+            <div class="slide" data-slide="5">
+                <div class="slide-content">
+                    <span class="slide-number">หน้า 5/5</span>
+                    <h2>🚀 เริ่มต้นใช้งานทันที</h2>
+                    <p>พร้อมแล้วไปเริ่มวิเคราะห์ข้อมูลกันเลย!</p>
+                    <div class="slide-actions">
+                        <a href="https://chat.openai.com" target="_blank" class="btn">🔗 ไปที่ ChatGPT</a>
+                        <a href="#" class="btn btn-outline">👀 ดูตัวอย่างเพิ่ม</a>
+                        <a href="#" class="btn btn-outline">📥 ดาวน์โหลดเอกสาร</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== NAVIGATION BUTTONS ===== -->
+        <div class="slide-nav">
+            <button class="slide-nav-btn prev-btn" id="prevBtn" disabled>← ย้อนกลับ</button>
+            <span class="slide-counter" id="slideCounter">1 / 5</span>
+            <button class="slide-nav-btn next-btn" id="nextBtn">ถัดไป →</button>
+        </div>
+
+        <!-- ===== COMPLETE BUTTON ===== -->
+        <div class="slide-complete" id="slideComplete" style="display: none;">
+            <p>✅ เรียนรู้ครบทุกขั้นตอนแล้ว!</p>
+            <a href="index.html" class="btn">กลับไปหน้าหมวดหมู่</a>
+        </div>
+
+    </main>
+
+    <div id="footer"></div>
+    <script src="../js/main.js"></script>
+
+<!-- ===== SLIDE SCRIPT ===== -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 1;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        const stepperBar = document.getElementById('stepperBar');
+        const stepDots = document.querySelectorAll('.step-dot');
+        const slideComplete = document.getElementById('slideComplete');
+
+        function goToSlide(slideNumber) {
+            if (slideNumber < 1) slideNumber = 1;
+            if (slideNumber > totalSlides) slideNumber = totalSlides;
+
+            currentSlide = slideNumber;
+
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            const activeSlide = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+            if (activeSlide) {
+                activeSlide.classList.add('active');
+            }
+
+            slideCounter.textContent = `${currentSlide} / ${totalSlides}`;
+
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            stepperBar.style.width = `${progress}%`;
+
+            stepDots.forEach(dot => {
+                const step = parseInt(dot.dataset.step);
+                dot.classList.remove('active', 'completed');
+                if (step === currentSlide) {
+                    dot.classList.add('active');
+                } else if (step < currentSlide) {
+                    dot.classList.add('completed');
+                }
+            });
+
+            prevBtn.disabled = (currentSlide === 1);
+
+            if (currentSlide === totalSlides) {
+                nextBtn.style.display = 'none';
+                slideComplete.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                slideComplete.style.display = 'none';
+            }
+
+            // 🔥 ไม่มี scrollIntoView แล้ว - ผู้ใช้เลื่อนเอง
+        }
+
+        prevBtn.addEventListener('click', function() {
+            goToSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', function() {
+            goToSlide(currentSlide + 1);
+        });
+
+        stepDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const step = parseInt(this.dataset.step);
+                goToSlide(step);
+            });
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' && currentSlide > 1) {
+                goToSlide(currentSlide - 1);
+            }
+        });
+
+        goToSlide(1);
+    });
+</script>
+</body>
+</html>
