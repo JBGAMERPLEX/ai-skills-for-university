@@ -30,7 +30,7 @@ function renderShell(root) {
         <div class="flex items-center gap-2">
           <span class="font-semibold text-white"><span class="text-brand">AI Skills</span> for University</span>
           <span class="hidden sm:inline opacity-50">|</span>
-          <p>© 2026 <a href="#/team" class="text-gray-400 hover:text-white transition">ทีมงาน ลาบเลิฟเวอร์</a></p>
+          <span>© 2026 <a href="#/team" class="text-gray-400 hover:text-white transition">ทีมงาน ลาบเลิฟเวอร์</a></span>
         </div>
         <div class="flex gap-3">
           <a href="#/about" class="hover:text-white transition">เกี่ยวกับเรา</a>
@@ -70,9 +70,9 @@ function updateNavbarUI() {
         : '');
 
     const dashboardLinkMobile = currentProfile.role === 'content_creator'
-      ? `<a href="#/creator" class="block py-1.5 text-sm text-gray-400 hover:text-white">แดชบอร์ด</a>`
+      ? `<a href="#/creator" class="block py-2 text-sm text-gray-400 hover:text-white">แดชบอร์ด</a>`
       : (currentProfile.role === 'content_manager'
-        ? `<a href="#/manager" class="block py-1.5 text-sm text-gray-400 hover:text-white">ตรวจสอบคอร์ส</a>`
+        ? `<a href="#/manager" class="block py-2 text-sm text-gray-400 hover:text-white">ตรวจสอบคอร์ส</a>`
         : '');
 
     const avatarHTML = currentProfile?.avatar_url
@@ -96,20 +96,21 @@ function updateNavbarUI() {
 
     mobileMenu = `
       <span class="block text-xs text-gray-500 px-2 pt-1">${escapeHTML(roleLabel)}</span>
-      <a href="#/my-courses" class="block py-1.5 text-sm text-gray-400 hover:text-white">คอร์สของฉัน</a>
+      <a href="#/my-courses" class="block py-2 text-sm text-gray-400 hover:text-white">คอร์สของฉัน</a>
       ${dashboardLinkMobile}
-      <a href="#/profile" class="block py-1.5 text-sm text-gray-400 hover:text-white">โปรไฟล์</a>
-      <button id="logout-btn" class="block w-full text-left py-1.5 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
+      <a href="#/profile" class="block py-2 text-sm text-gray-400 hover:text-white">โปรไฟล์</a>
+      <button id="logout-btn" class="block w-full text-left py-2 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
   } else {
     desktopMenu = `
       <div class="flex items-center gap-2">
-        <button id="nav-login-btn" class="btn-outline-brand text-xs px-3 py-1.5">เข้าสู่ระบบ</button>
-        <button id="nav-register-btn" class="btn-brand text-xs px-3 py-1.5">สมัครสมาชิก</button>
+        <button class="nav-login-btn btn-outline-brand text-xs px-3 py-1.5">เข้าสู่ระบบ</button>
+        <button class="nav-register-btn btn-brand text-xs px-3 py-1.5">สมัครสมาชิก</button>
       </div>`;
 
+    // ปุ่มมือถือ ใหญ่ขึ้น
     mobileMenu = `
-      <button id="nav-login-btn" class="block w-full btn-outline-brand text-center py-1.5 mb-1 text-xs">เข้าสู่ระบบ</button>
-      <button id="nav-register-btn" class="block w-full btn-brand text-center py-1.5 text-xs">สมัครสมาชิก</button>`;
+      <button class="nav-login-btn btn-outline-brand w-full text-center py-3 text-sm mb-1">เข้าสู่ระบบ</button>
+      <button class="nav-register-btn btn-brand w-full text-center py-3 text-sm">สมัครสมาชิก</button>`;
   }
 
   navbar.innerHTML = `
@@ -128,10 +129,10 @@ function updateNavbarUI() {
       </button>
     </div>
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden px-3 pb-2 space-y-0.5">
-      <a href="#/home" class="block py-1.5 text-sm text-gray-400 hover:text-white">หน้าหลัก</a>
-      <a href="#/courses" class="block py-1.5 text-sm text-gray-400 hover:text-white">คอร์สทั้งหมด</a>
-      <a href="#/members" class="block py-1.5 text-sm text-gray-400 hover:text-white">สมาชิก</a>
+    <div id="mobile-menu" class="hidden md:hidden px-3 pb-2 space-y-1">
+      <a href="#/home" class="block py-2 text-sm text-gray-400 hover:text-white">หน้าหลัก</a>
+      <a href="#/courses" class="block py-2 text-sm text-gray-400 hover:text-white">คอร์สทั้งหมด</a>
+      <a href="#/members" class="block py-2 text-sm text-gray-400 hover:text-white">สมาชิก</a>
       ${mobileMenu}
     </div>`;
 
@@ -153,7 +154,15 @@ function updateNavbarUI() {
     });
   }
 
-  // Event listeners
+  // ✅ แก้ไข: ใช้ class แทน id เพื่อครอบคลุมทั้ง desktop และ mobile
+  document.querySelectorAll('.nav-login-btn').forEach(btn => {
+    btn.addEventListener('click', () => navigate('/login'));
+  });
+  document.querySelectorAll('.nav-register-btn').forEach(btn => {
+    btn.addEventListener('click', () => navigate('/register'));
+  });
+
+  // Event listeners อื่น ๆ สำหรับผู้ใช้ที่ล็อกอิน
   if (currentUser) {
     document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -173,9 +182,6 @@ function updateNavbarUI() {
       e.preventDefault();
       navigate('/manager');
     });
-  } else {
-    document.getElementById('nav-login-btn')?.addEventListener('click', () => navigate('/login'));
-    document.getElementById('nav-register-btn')?.addEventListener('click', () => navigate('/register'));
   }
 }
 
