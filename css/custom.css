@@ -1,0 +1,126 @@
+/* ============================================
+   AI Skills for University – Custom Styles
+   Primary: #F9754A
+   ============================================ */
+
+:root {
+  --color-brand: #F9754A;
+  --color-brand-hover: #E8683A;
+  --color-bg: #030712;
+  --color-surface: #111827;
+  --color-border: #1f2937;
+  --color-text: #e5e7eb;
+}
+
+body {
+  font-family: 'Kanit', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1a1a1a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+.btn-brand {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background-color: var(--color-brand); color: #fff; font-weight: 600;
+  padding: 0.625rem 1.5rem; border-radius: 9999px; border: none; cursor: pointer;
+  transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(249,117,74,0.35);
+}
+.btn-brand:hover { background-color: var(--color-brand-hover); box-shadow: 0 6px 20px rgba(249,117,74,0.5); transform: translateY(-1px); }
+.btn-brand:active { transform: scale(0.95); }
+
+.btn-outline-brand {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: transparent; color: var(--color-brand); font-weight: 600;
+  padding: 0.625rem 1.5rem; border-radius: 9999px; border: 2px solid var(--color-brand);
+  cursor: pointer; transition: all 0.2s ease;
+}
+.btn-outline-brand:hover { background: rgba(249,117,74,0.1); transform: translateY(-1px); }
+.btn-outline-brand:active { transform: scale(0.95); }
+
+.card-hover {
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.75rem;
+  transition: all 0.3s ease; overflow: hidden;
+}
+.card-hover:hover { border-color: var(--color-brand); box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+
+.badge {
+  display: inline-block; padding: 0.2em 0.75em; border-radius: 9999px; font-size: 0.75rem; font-weight: 500;
+}
+.badge-draft { background: #374151; color: #d1d5db; }
+.badge-pending { background: #f59e0b; color: #000; }
+.badge-approved { background: #10b981; color: #fff; }
+.badge-published { background: #10b981; color: #fff; }
+.badge-rejected { background: #ef4444; color: #fff; }
+
+.prose-lesson {
+  line-height: 1.8; color: #d1d5db;
+}
+.prose-lesson h1, .prose-lesson h2, .prose-lesson h3 { color: #fff; font-weight: 600; margin-top: 1.8em; margin-bottom: 0.5em; }
+.prose-lesson p { margin-bottom: 1.2em; }
+.prose-lesson a { color: var(--color-brand); text-decoration: underline; }
+.prose-lesson img { max-width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; }
+
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--color-brand); box-shadow: 0 0 0 3px rgba(249,117,74,0.2); }
+
+.animate-spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp 0.5s ease-out; }
+
+.line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; line-clamp: 1; }
+.line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+
+progress { appearance: none; width: 100%; height: 0.5rem; border-radius: 9999px; overflow: hidden; background: #1f2937; }
+progress::-webkit-progress-bar { background: #1f2937; }
+progress::-webkit-progress-value { background: var(--color-brand); border-radius: 9999px; }
+
+/* ---------- Expandable Lesson Content ---------- */
+.lesson-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.lesson-content.open {
+  max-height: 5000px; /* มากพอสำหรับเนื้อหาทั้งหมด */
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.lesson-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+.lesson-toggle i.bi-chevron-down {
+  transition: transform 0.3s ease;
+}
+.lesson-toggle i.bi-chevron-down.rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Modal (confirm dialog) */
+dialog.modal {
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 1rem;
+}
+dialog.modal::backdrop { background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+dialog.modal > div {
+  background: #111827; border: 1px solid #1f2937; border-radius: 1rem; padding: 2rem; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+}
+
+body:has(dialog.modal[open]) { overflow: hidden; }
+
+#mobile-menu { transition: max-height 0.3s ease; max-height: 500px; }
+#mobile-menu.hidden { max-height: 0; overflow: hidden; padding: 0; }
+
+a, button, .card-hover, input, select, textarea { transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s; }

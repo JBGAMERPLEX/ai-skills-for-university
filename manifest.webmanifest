@@ -1,0 +1,17 @@
+{
+  "name": "AI Skills for University",
+  "short_name": "AI Skills",
+  "description": "แพลตฟอร์มคอร์สเรียนออนไลน์สำหรับมหาวิทยาลัย",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F9754A",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "th"
+}

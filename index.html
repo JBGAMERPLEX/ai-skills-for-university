@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Skills for University</title>
+
+  <!-- Primary color for browser UI -->
+  <meta name="theme-color" content="#F9754A" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate icon" href="favicon.ico" sizes="any" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Google Fonts: Kanit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Tailwind CSS Play CDN (JIT compiler) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#F9754A',
+              hover: '#E8683A',
+              light: '#FFF0EC',
+            },
+          },
+          fontFamily: {
+            sans: ['Kanit', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Preline UI (Vanilla JS components) -->
+  <script src="https://cdn.jsdelivr.net/npm/preline@2.0.0/dist/preline.min.js"></script>
+
+  <!-- Custom styles (overrides + helper classes) -->
+  <link rel="stylesheet" href="css/custom.css" />
+</head>
+<body class="bg-gray-950 text-gray-200 font-sans antialiased">
+  <!-- App root rendered by JS -->
+  <div id="app"></div>
+
+  <!-- Main entry point -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
