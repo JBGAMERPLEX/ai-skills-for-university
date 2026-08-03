@@ -1,21 +1,22 @@
+// js/views/manager-review.js
 import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
 import { navigate } from '../utils/router.js';
+import { convertVideoUrl } from '../utils/video-url.js';
 
 let currentUser = null;
-let currentProfile = null;   // ✅ ใช้ชื่อผู้จัดการ
 let courseId = null;
 
 export async function render(container, params) {
-  const session = await getSession();
-  if (!session) return;
-  currentUser = session;
-
-  const { getProfile } = await import('../services/auth.js');
-  currentProfile = await getProfile(currentUser.id);
+  currentUser = await getSession();
 
   if (!currentUser || currentUser.role !== 'content_manager') {
-    container.innerHTML = `<div class="text-center py-20">ไม่มีสิทธิ์เข้าถึง</div>`;
+    container.innerHTML = `
+      <div class="text-center py-20">
+        <i class="bi bi-shield-lock text-6xl text-gray-600"></i>
+        <h2 class="text-2xl font-bold mt-4 text-white">ไม่มีสิทธิ์เข้าถึง</h2>
+        <p class="text-gray-400 mt-2">เฉพาะผู้จัดการเนื้อหาเท่านั้น</p>
+      </div>`;
     return;
   }
 
@@ -46,11 +47,9 @@ export async function render(container, params) {
         <h3 class="text-2xl font-bold text-white mb-2">${escapeHTML(course.title)}</h3>
         <p class="text-gray-400 mb-4">${escapeHTML(course.description || '')}</p>
         ${course.thumbnail_url ? `<img src="${escapeHTML(course.thumbnail_url)}" class="max-h-64 rounded-lg object-cover mb-4" />` : ''}
-        <div class="mb-4 flex items-center gap-3">
+        <div class="mb-4">
           <span class="badge badge-${course.status}">${statusText(course.status)}</span>
-          ${course.reviewed_by ? `<span class="text-xs text-gray-400">ตรวจสอบโดย: ${escapeHTML(course.reviewed_by)}</span>` : ''}
         </div>
-        ${course.review_comment ? `<p class="text-xs text-gray-500 mt-1">💬 ${escapeHTML(course.review_comment)}</p>` : ''}
 
         <h4 class="text-xl font-semibold text-white mb-3 mt-6">เนื้อหาคอร์ส</h4>
         <div class="space-y-4">
@@ -76,7 +75,7 @@ export async function render(container, params) {
                         <div class="py-3 space-y-3">
                           ${lesson.video_url ? `
                             <div class="aspect-video rounded-lg overflow-hidden">
-                              <iframe src="${escapeHTML(lesson.video_url)}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                              <iframe src="${escapeHTML(convertVideoUrl(lesson.video_url))}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                             </div>` : ''}
                           ${lesson.image_url ? `<img src="${escapeHTML(lesson.image_url)}" class="max-h-96 w-full object-cover rounded-lg" />` : ''}
                           ${lesson.rich_text ? `<div class="prose-lesson">${lesson.rich_text}</div>` : ''}
@@ -116,13 +115,11 @@ export async function render(container, params) {
 
   async function doReview(status) {
     const comment = document.getElementById('review-comment').value.trim();
-    const reviewedBy = currentProfile?.full_name || currentUser.email;
     const supabase = await getSupabaseClient();
     await supabase.rpc('review_course', {
       p_course_id: courseId,
       p_status: status,
-      p_comment: comment || null,
-      p_reviewed_by: reviewedBy
+      p_comment: comment || null
     });
     navigate('/manager');
   }
@@ -130,7 +127,6 @@ export async function render(container, params) {
   document.getElementById('btn-approve').onclick = () => doReview('published');
   document.getElementById('btn-revise').onclick = () => doReview('revision');
 
-  // Toggle lesson content
   document.querySelectorAll('.lesson-toggle').forEach(toggle => {
     toggle.addEventListener('click', () => {
       const lessonId = toggle.dataset.lessonId;
@@ -154,7 +150,6 @@ function statusText(s) {
     pending: 'รอตรวจสอบ',
     approved: 'เผยแพร่แล้ว',
     published: 'เผยแพร่แล้ว',
-    rejected: 'ถูกปฏิเสธ',
     revision: 'ขอแก้ไข'
   };
   return map[s] || s;

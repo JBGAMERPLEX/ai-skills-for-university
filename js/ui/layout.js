@@ -90,7 +90,7 @@ function updateNavbarUI() {
           <a href="#/my-courses" class="block px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">คอร์สของฉัน</a>
           ${dashboardLinkDesktop}
           <a id="profile-link" href="#/profile" class="block px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">โปรไฟล์</a>
-          <button id="logout-btn" class="w-full text-left px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">ออกจากระบบ</button>
+          <button class="logout-btn w-full text-left px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">ออกจากระบบ</button>
         </div>
       </div>`;
 
@@ -99,7 +99,7 @@ function updateNavbarUI() {
       <a href="#/my-courses" class="block py-2 text-sm text-gray-400 hover:text-white">คอร์สของฉัน</a>
       ${dashboardLinkMobile}
       <a href="#/profile" class="block py-2 text-sm text-gray-400 hover:text-white">โปรไฟล์</a>
-      <button id="logout-btn" class="block w-full text-left py-2 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
+      <button class="logout-btn block w-full text-left py-2 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
   } else {
     desktopMenu = `
       <div class="flex items-center gap-2">
@@ -107,7 +107,6 @@ function updateNavbarUI() {
         <button class="nav-register-btn btn-brand text-xs px-3 py-1.5">สมัครสมาชิก</button>
       </div>`;
 
-    // ปุ่มมือถือ ใหญ่ขึ้น
     mobileMenu = `
       <button class="nav-login-btn btn-outline-brand w-full text-center py-3 text-sm mb-1">เข้าสู่ระบบ</button>
       <button class="nav-register-btn btn-brand w-full text-center py-3 text-sm">สมัครสมาชิก</button>`;
@@ -154,7 +153,7 @@ function updateNavbarUI() {
     });
   }
 
-  // ✅ แก้ไข: ใช้ class แทน id เพื่อครอบคลุมทั้ง desktop และ mobile
+  // ✅ Login/Register buttons (both desktop & mobile)
   document.querySelectorAll('.nav-login-btn').forEach(btn => {
     btn.addEventListener('click', () => navigate('/login'));
   });
@@ -162,14 +161,18 @@ function updateNavbarUI() {
     btn.addEventListener('click', () => navigate('/register'));
   });
 
-  // Event listeners อื่น ๆ สำหรับผู้ใช้ที่ล็อกอิน
+  // Event listeners for logged-in users
   if (currentUser) {
-    document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
-      e.preventDefault();
-      await signOut();
-      window.dispatchEvent(new Event('auth-change'));
-      navigate('/home');
+    // ✅ Logout buttons (both desktop & mobile)
+    document.querySelectorAll('.logout-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await signOut();
+        window.dispatchEvent(new Event('auth-change'));
+        navigate('/home');
+      });
     });
+
     document.getElementById('profile-link')?.addEventListener('click', (e) => {
       e.preventDefault();
       navigate('/profile');

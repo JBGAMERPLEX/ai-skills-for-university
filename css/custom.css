@@ -118,6 +118,14 @@ dialog.modal > div {
   max-height: 80vh; overflow-y: auto;
 }
 
+#mobile-menu .btn-brand,
+#mobile-menu .btn-outline-brand {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body:has(dialog.modal[open]) { overflow: hidden; }
 
 #mobile-menu { transition: max-height 0.3s ease; max-height: 500px; }

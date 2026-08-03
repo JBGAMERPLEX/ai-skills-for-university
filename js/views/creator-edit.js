@@ -1,9 +1,13 @@
+// js/views/creator-edit.js
 import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
 import { navigate } from '../utils/router.js';
+import { convertVideoUrl } from '../utils/video-url.js';
 
 let currentUser = null;
 let courseId = null;
+let saveCourseClickCount = 0;
+let saveCourseResetTimer = null;
 
 export async function render(container, params) {
   currentUser = await getSession();
@@ -36,7 +40,6 @@ async function resetToDraftIfRevision() {
     p_course_id: courseId
   });
   if (data && data.length > 0 && data[0].status === 'revision') {
-    // ใช้ RPC ที่ข้าม RLS เพื่อเปลี่ยนสถานะกลับเป็น draft
     await supabase.rpc('reset_to_draft', {
       p_user_id: currentUser.id,
       p_course_id: courseId
@@ -44,6 +47,9 @@ async function resetToDraftIfRevision() {
   }
 }
 
+// ================================================================
+//  RENDER EDITOR SHELL
+// ================================================================
 function renderEditor(container, course, sections) {
   container.innerHTML = `
     <div class="fade-up max-w-4xl mx-auto">
@@ -87,74 +93,176 @@ function renderEditor(container, course, sections) {
         </div>
         <div id="sections-container" class="space-y-4"></div>
       </div>
-
-      <dialog id="lesson-modal" class="modal">
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-xl mx-4 max-h-[90vh] overflow-y-auto">
-          <h3 class="text-xl font-bold text-white mb-4">บทเรียน</h3>
-          <form id="lesson-form" class="space-y-3">
-            <input type="hidden" id="lesson-id">
-            <div>
-              <label class="text-sm text-gray-400">ชื่อบทเรียน</label>
-              <input id="lesson-title" class="w-full bg-gray-800 rounded p-2 text-white mt-1" required>
-            </div>
-            <div>
-              <label class="text-sm text-gray-400">ประเภทเนื้อหา (เลือกอย่างน้อยหนึ่งอย่าง)</label>
-              <div class="grid grid-cols-2 gap-2 mt-1">
-                <label class="flex items-center gap-2 text-gray-300"><input type="checkbox" class="content-type" value="video"> วิดีโอ</label>
-                <label class="flex items-center gap-2 text-gray-300"><input type="checkbox" class="content-type" value="image"> รูปภาพ</label>
-                <label class="flex items-center gap-2 text-gray-300"><input type="checkbox" class="content-type" value="text"> ข้อความ</label>
-                <label class="flex items-center gap-2 text-gray-300"><input type="checkbox" class="content-type" value="resources"> แหล่งข้อมูล</label>
-              </div>
-            </div>
-            <div id="video-fields" class="hidden">
-              <label class="text-sm text-gray-400">URL วิดีโอ</label>
-              <input id="lesson-video" class="w-full bg-gray-800 rounded p-2 text-white mt-1" placeholder="https://...">
-            </div>
-            <div id="image-fields" class="hidden">
-              <label class="text-sm text-gray-400">URL รูปภาพ</label>
-              <input id="lesson-image" class="w-full bg-gray-800 rounded p-2 text-white mt-1" placeholder="https://...">
-            </div>
-            <div id="text-fields" class="hidden">
-              <label class="text-sm text-gray-400">เนื้อหา (HTML)</label>
-              <textarea id="lesson-text" rows="4" class="w-full bg-gray-800 rounded p-2 text-white mt-1"></textarea>
-            </div>
-            <div id="resources-fields" class="hidden">
-              <label class="text-sm text-gray-400">แหล่งข้อมูลเพิ่มเติม (URL หรือข้อความ)</label>
-              <input id="lesson-resources" class="w-full bg-gray-800 rounded p-2 text-white mt-1">
-            </div>
-            <div class="flex justify-end gap-2 mt-4">
-              <button type="button" id="close-lesson-modal" class="btn-outline-brand text-sm py-2 px-4">ยกเลิก</button>
-              <button type="submit" class="btn-brand text-sm py-2 px-4">บันทึก</button>
-            </div>
-          </form>
-        </div>
-        <form method="dialog" class="modal-backdrop"><button>close</button></form>
-      </dialog>
     </div>`;
 
   document.getElementById('back-btn').addEventListener('click', () => navigate('/creator'));
   document.getElementById('save-course-btn').addEventListener('click', saveCourseMeta);
   renderSections(document.getElementById('sections-container'), sections);
 
-  document.getElementById('add-section-btn').addEventListener('click', async () => {
-    const title = prompt('ชื่อหัวข้อ:');
-    if (!title) return;
-    const supabase = await getSupabaseClient();
-    await supabase.rpc('add_section', { p_course_id: courseId, p_title: title });
-    await resetToDraftIfRevision();
-    await reloadSections(document.getElementById('sections-container'));
-  });
-
-  document.getElementById('close-lesson-modal').addEventListener('click', () => {
-    document.getElementById('lesson-modal').close();
-  });
-
-  document.getElementById('lesson-form').addEventListener('submit', saveLesson);
-  document.querySelectorAll('.content-type').forEach(cb => {
-    cb.addEventListener('change', toggleContentFields);
+  document.getElementById('add-section-btn').addEventListener('click', () => {
+    addSectionInline();
   });
 }
 
+// ================================================================
+//  SAVE COURSE META (Double-click confirm)
+// ================================================================
+function saveCourseMeta() {
+  const btn = document.getElementById('save-course-btn');
+  
+  saveCourseClickCount++;
+  
+  if (saveCourseClickCount === 1) {
+    btn.innerHTML = '<i class="bi bi-check-lg"></i> กดอีกครั้งเพื่อยืนยัน';
+    btn.classList.add('!bg-green-600', '!border-green-600');
+    
+    saveCourseResetTimer = setTimeout(() => {
+      saveCourseClickCount = 0;
+      btn.innerHTML = 'บันทึกข้อมูลคอร์ส';
+      btn.classList.remove('!bg-green-600', '!border-green-600');
+    }, 3000);
+  } else if (saveCourseClickCount === 2) {
+    clearTimeout(saveCourseResetTimer);
+    btn.innerHTML = 'บันทึกข้อมูลคอร์ส';
+    btn.classList.remove('!bg-green-600', '!border-green-600');
+    saveCourseClickCount = 0;
+    performSaveCourseMeta();
+  }
+}
+
+async function performSaveCourseMeta() {
+  const title = document.getElementById('course-title').value.trim();
+  const desc = document.getElementById('course-desc').value.trim();
+  const thumb = document.getElementById('course-thumb').value.trim();
+  const supabase = await getSupabaseClient();
+  await supabase.rpc('update_course', {
+    p_user_id: currentUser.id,
+    p_course_id: courseId,
+    p_title: title,
+    p_description: desc || null,
+    p_thumbnail_url: thumb || null
+  });
+  await resetToDraftIfRevision();
+  
+  const btn = document.getElementById('save-course-btn');
+  btn.innerHTML = '<i class="bi bi-check-circle"></i> บันทึกแล้ว!';
+  btn.classList.add('!bg-green-600', '!border-green-600');
+  setTimeout(() => {
+    btn.innerHTML = 'บันทึกข้อมูลคอร์ส';
+    btn.classList.remove('!bg-green-600', '!border-green-600');
+  }, 2000);
+}
+
+// ================================================================
+//  INLINE ADD SECTION
+// ================================================================
+function addSectionInline() {
+  const container = document.getElementById('sections-container');
+
+  const newSectionDiv = document.createElement('div');
+  newSectionDiv.className = 'bg-gray-900 border border-gray-800 rounded-xl p-4';
+  newSectionDiv.innerHTML = `
+    <div class="flex items-center gap-2">
+      <input type="text" class="section-title-input w-full bg-gray-800 rounded p-2 text-white text-sm" placeholder="ชื่อหัวข้อใหม่..." autofocus>
+      <button class="save-section-btn text-green-400 hover:text-green-300 p-1" title="บันทึก"><i class="bi bi-check-lg text-xl"></i></button>
+      <button class="cancel-section-btn text-red-400 hover:text-red-300 p-1" title="ยกเลิก"><i class="bi bi-x-lg text-xl"></i></button>
+    </div>
+    <p class="text-gray-500 text-sm pl-2 mt-2">ยังไม่มีเนื้อหา</p>
+  `;
+
+  container.appendChild(newSectionDiv);
+
+  const input = newSectionDiv.querySelector('.section-title-input');
+  input.focus();
+
+  const saveSection = async () => {
+    const title = input.value.trim();
+    if (!title) {
+      newSectionDiv.remove();
+      return;
+    }
+    const supabase = await getSupabaseClient();
+    await supabase.rpc('add_section', { p_course_id: courseId, p_title: title });
+    await resetToDraftIfRevision();
+    await reloadSections(container);
+  };
+
+  newSectionDiv.querySelector('.save-section-btn').addEventListener('click', saveSection);
+  newSectionDiv.querySelector('.cancel-section-btn').addEventListener('click', () => {
+    newSectionDiv.remove();
+  });
+
+  input.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') await saveSection();
+    if (e.key === 'Escape') newSectionDiv.remove();
+  });
+}
+
+// ================================================================
+//  INLINE EDIT SECTION
+// ================================================================
+function editSectionInline(sectionId, container) {
+  const sectionDiv = document.querySelector(`[data-id="${sectionId}"]`).closest('.bg-gray-900');
+  const titleSpan = sectionDiv.querySelector('span.text-white');
+  const oldTitle = titleSpan.textContent;
+
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = oldTitle;
+  input.className = 'w-full bg-gray-800 rounded p-1 text-white text-sm';
+
+  titleSpan.replaceWith(input);
+  input.focus();
+
+  const editBtn = sectionDiv.querySelector('.edit-section-btn');
+  const deleteBtn = sectionDiv.querySelector('.delete-section-btn');
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'text-green-400 hover:text-green-300 p-1';
+  saveBtn.innerHTML = '<i class="bi bi-check-lg text-xl"></i>';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'text-red-400 hover:text-red-300 p-1';
+  cancelBtn.innerHTML = '<i class="bi bi-x-lg text-xl"></i>';
+
+  editBtn.style.display = 'none';
+  deleteBtn.style.display = 'none';
+  editBtn.parentNode.insertBefore(saveBtn, editBtn);
+  editBtn.parentNode.insertBefore(cancelBtn, editBtn);
+
+  const save = async () => {
+    const newTitle = input.value.trim();
+    if (newTitle && newTitle !== oldTitle) {
+      const supabase = await getSupabaseClient();
+      await supabase.rpc('update_section', { p_section_id: sectionId, p_title: newTitle });
+      await resetToDraftIfRevision();
+    }
+    await reloadSections(container);
+  };
+
+  const cancel = () => {
+    const span = document.createElement('span');
+    span.className = 'text-white font-medium';
+    span.textContent = oldTitle;
+    input.replaceWith(span);
+    saveBtn.remove();
+    cancelBtn.remove();
+    editBtn.style.display = '';
+    deleteBtn.style.display = '';
+  };
+
+  saveBtn.addEventListener('click', save);
+  cancelBtn.addEventListener('click', cancel);
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') save();
+    if (e.key === 'Escape') cancel();
+  });
+}
+
+// ================================================================
+//  RENDER SECTIONS & LESSONS
+// ================================================================
 function renderSections(container, sections) {
   container.innerHTML = sections.map(sec => `
     <div class="bg-gray-900 border border-gray-800 rounded-xl p-4">
@@ -174,20 +282,33 @@ function renderSections(container, sections) {
     </div>
   `).join('');
 
+  // ---------- SECTION EVENTS ----------
   container.querySelectorAll('.edit-section-btn').forEach(b => {
-    b.addEventListener('click', async () => {
-      const newTitle = prompt('ชื่อหัวข้อใหม่:');
-      if (newTitle) {
-        const supabase = await getSupabaseClient();
-        await supabase.rpc('update_section', { p_section_id: b.dataset.id, p_title: newTitle });
-        await resetToDraftIfRevision();
-        await reloadSections(container);
-      }
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      editSectionInline(b.dataset.id, container);
     });
   });
+
+  // Double-click to delete section
   container.querySelectorAll('.delete-section-btn').forEach(b => {
-    b.addEventListener('click', async () => {
-      if (confirm('ลบหัวข้อนี้?')) {
+    let clickCount = 0;
+    let resetTimer;
+    
+    b.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      clickCount++;
+      
+      if (clickCount === 1) {
+        b.classList.add('text-red-500');
+        b.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+        resetTimer = setTimeout(() => {
+          clickCount = 0;
+          b.classList.remove('text-red-500');
+          b.innerHTML = '<i class="bi bi-trash"></i>';
+        }, 3000);
+      } else if (clickCount === 2) {
+        clearTimeout(resetTimer);
         const supabase = await getSupabaseClient();
         await supabase.rpc('delete_section', { p_section_id: b.dataset.id });
         await resetToDraftIfRevision();
@@ -195,24 +316,66 @@ function renderSections(container, sections) {
       }
     });
   });
-  container.querySelectorAll('.add-lesson-btn').forEach(b => {
-    b.addEventListener('click', () => openLessonModal({ sectionId: b.dataset.sectionId, lessonId: null, lessonObj: null }));
-  });
 
-  // Edit/Delete lesson buttons
-  container.querySelectorAll('.edit-lesson-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      openLessonModal({ sectionId: btn.dataset.sectionId, lessonId: btn.dataset.lessonId, lessonObj: null });
+  // ---------- LESSON EVENTS ----------
+  container.querySelectorAll('.add-lesson-btn').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      addLessonInline(b.dataset.sectionId);
     });
   });
+
+  container.querySelectorAll('.edit-lesson-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const sectionId = btn.dataset.sectionId;
+      const lessonId = btn.dataset.lessonId;
+      
+      const existingForm = document.querySelector('.inline-edit-form');
+      if (existingForm) existingForm.remove();
+      
+      editLessonInline(sectionId, lessonId);
+    });
+  });
+
+  // Double-click to delete lesson
   container.querySelectorAll('.delete-lesson-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (confirm('ลบบทเรียนนี้?')) {
+    let clickCount = 0;
+    let resetTimer;
+    
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      clickCount++;
+      
+      if (clickCount === 1) {
+        btn.classList.add('text-red-500');
+        btn.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+        resetTimer = setTimeout(() => {
+          clickCount = 0;
+          btn.classList.remove('text-red-500');
+          btn.innerHTML = '<i class="bi bi-trash"></i>';
+        }, 3000);
+      } else if (clickCount === 2) {
+        clearTimeout(resetTimer);
         const supabase = await getSupabaseClient();
         await supabase.rpc('delete_lesson', { p_lesson_id: btn.dataset.lessonId });
         await resetToDraftIfRevision();
         await reloadSections(container);
       }
+    });
+  });
+
+  // ---------- EXPAND/COLLAPSE LESSON PREVIEW ----------
+  container.querySelectorAll('.lesson-toggle').forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+      if (e.target.closest('.edit-lesson-btn') || e.target.closest('.delete-lesson-btn')) return;
+      
+      const lessonId = toggle.dataset.lessonId;
+      const content = document.getElementById(`creator-content-${lessonId}`);
+      const icon = document.getElementById(`creator-icon-${lessonId}`);
+      content?.classList.toggle('open');
+      icon?.classList.toggle('rotate-180');
     });
   });
 }
@@ -225,15 +388,41 @@ function renderLessons(lessons, sectionId) {
     if (lesson.image_url) typeIcon += '<i class="bi bi-image mr-1"></i>';
     if (lesson.rich_text) typeIcon += '<i class="bi bi-text-paragraph mr-1"></i>';
     if (lesson.external_resources) typeIcon += '<i class="bi bi-link-45deg mr-1"></i>';
+
     return `
-      <div class="flex justify-between items-center bg-gray-800 rounded-lg px-3 py-2">
-        <div class="flex items-center gap-2 text-white text-sm">
-          ${typeIcon}
-          <span>${escapeHTML(lesson.title)}</span>
+      <div class="border border-gray-800 rounded-lg overflow-hidden">
+        <div class="lesson-toggle flex justify-between items-center p-3 bg-gray-800 hover:bg-gray-700 transition cursor-pointer"
+             data-lesson-id="${lesson.id}">
+          <div class="flex items-center gap-2 text-white text-sm">
+            ${typeIcon}
+            <span>${escapeHTML(lesson.title)}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="edit-lesson-btn text-gray-400 hover:text-white" data-lesson-id="${lesson.id}" data-section-id="${sectionId}"><i class="bi bi-pencil"></i></button>
+            <button class="delete-lesson-btn text-red-400 hover:text-red-300" data-lesson-id="${lesson.id}"><i class="bi bi-trash"></i></button>
+            <i class="bi bi-chevron-down text-gray-400 transition-transform duration-200" id="creator-icon-${lesson.id}"></i>
+          </div>
         </div>
-        <div class="flex gap-1">
-          <button class="edit-lesson-btn text-gray-400 hover:text-white" data-lesson-id="${lesson.id}" data-section-id="${sectionId}"><i class="bi bi-pencil"></i></button>
-          <button class="delete-lesson-btn text-red-400 hover:text-red-300" data-lesson-id="${lesson.id}"><i class="bi bi-trash"></i></button>
+        <div id="creator-content-${lesson.id}" class="lesson-content bg-gray-950 px-4">
+          <div class="py-3 space-y-3 text-sm">
+            ${lesson.video_url ? `
+              <div class="aspect-video rounded-lg overflow-hidden">
+                <iframe src="${escapeHTML(convertVideoUrl(lesson.video_url))}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+              </div>` : ''}
+            ${lesson.image_url ? `<img src="${escapeHTML(lesson.image_url)}" class="max-h-96 w-full object-cover rounded-lg" />` : ''}
+            ${lesson.rich_text ? 
+              lesson.rich_text.split('<!--SEP-->').map(txt => 
+                `<div class="prose-lesson mb-4">${txt}</div>`
+              ).join('') 
+            : ''}
+            ${lesson.external_resources ? `
+              <div class="pt-2 border-t border-gray-800">
+                <h4 class="font-semibold text-white mb-1">แหล่งข้อมูลเพิ่มเติม</h4>
+                ${lesson.external_resources.split(',').filter(r => r.trim()).map(res => `
+                  <a href="${escapeHTML(res.trim())}" target="_blank" class="text-brand hover:underline break-all block">${escapeHTML(res.trim())}</a>
+                `).join('')}
+              </div>` : ''}
+          </div>
         </div>
       </div>`;
   }).join('');
@@ -245,117 +434,273 @@ async function reloadSections(container) {
   renderSections(container, sections || []);
 }
 
-async function openLessonModal({ sectionId, lessonId, lessonObj }) {
-  const modal = document.getElementById('lesson-modal');
-  const form = document.getElementById('lesson-form');
-  form.reset();
-  document.getElementById('lesson-id').value = '';
-  document.getElementById('lesson-title').value = '';
-  document.querySelectorAll('.content-type').forEach(cb => cb.checked = false);
-  document.getElementById('lesson-video').value = '';
-  document.getElementById('lesson-image').value = '';
-  document.getElementById('lesson-text').value = '';
-  document.getElementById('lesson-resources').value = '';
+// ================================================================
+//  INLINE ADD LESSON
+// ================================================================
+function addLessonInline(sectionId) {
+  const container = document.getElementById('sections-container');
+  const sectionDiv = container.querySelector(`.add-lesson-btn[data-section-id="${sectionId}"]`).closest('.bg-gray-900');
+  const lessonsContainer = sectionDiv.querySelector(`[id^="lessons-"]`);
 
-  let lesson = lessonObj;
-  if (!lesson && lessonId) {
-    const supabase = await getSupabaseClient();
-    const { data: fetchedLesson } = await supabase
-      .from('lessons')
-      .select('*')
-      .eq('id', lessonId)
-      .single();
-    lesson = fetchedLesson;
-  }
+  const form = document.createElement('div');
+  form.className = 'inline-edit-form bg-gray-800 rounded-lg p-3 mt-2 border border-gray-700';
+  form.innerHTML = buildLessonFormHTML();
+  lessonsContainer.appendChild(form);
 
-  if (lesson) {
-    document.getElementById('lesson-id').value = lesson.id;
-    document.getElementById('lesson-title').value = lesson.title || '';
-    if (lesson.video_url) document.querySelector('.content-type[value="video"]').checked = true;
-    if (lesson.image_url) document.querySelector('.content-type[value="image"]').checked = true;
-    if (lesson.rich_text) document.querySelector('.content-type[value="text"]').checked = true;
-    if (lesson.external_resources) document.querySelector('.content-type[value="resources"]').checked = true;
-    document.getElementById('lesson-video').value = lesson.video_url || '';
-    document.getElementById('lesson-image').value = lesson.image_url || '';
-    document.getElementById('lesson-text').value = lesson.rich_text || '';
-    document.getElementById('lesson-resources').value = lesson.external_resources || '';
-  }
+  const titleInput = form.querySelector('.inline-lesson-title');
+  titleInput.focus();
 
-  toggleContentFields();
-  modal.dataset.sectionId = sectionId;
-  modal.showModal();
-}
-
-function toggleContentFields() {
-  document.getElementById('video-fields').classList.toggle('hidden', !document.querySelector('.content-type[value="video"]').checked);
-  document.getElementById('image-fields').classList.toggle('hidden', !document.querySelector('.content-type[value="image"]').checked);
-  document.getElementById('text-fields').classList.toggle('hidden', !document.querySelector('.content-type[value="text"]').checked);
-  document.getElementById('resources-fields').classList.toggle('hidden', !document.querySelector('.content-type[value="resources"]').checked);
-}
-
-async function saveLesson(e) {
-  e.preventDefault();
-  const lessonId = document.getElementById('lesson-id').value;
-  const title = document.getElementById('lesson-title').value.trim();
-  const sectionId = document.getElementById('lesson-modal').dataset.sectionId;
-  if (!title) return;
-
-  const supabase = await getSupabaseClient();
-  const videoUrl = document.getElementById('lesson-video').value.trim() || null;
-  const imageUrl = document.getElementById('lesson-image').value.trim() || null;
-  const text = document.getElementById('lesson-text').value.trim() || null;
-  const resources = document.getElementById('lesson-resources').value.trim() || null;
-
-  try {
-    if (lessonId) {
-      await supabase.rpc('update_lesson', {
-        p_lesson_id: lessonId,
-        p_title: title,
-        p_video_url: videoUrl,
-        p_image_url: imageUrl,
-        p_rich_text_content: text,
-        p_external_resources: resources
-      });
-    } else {
-      const { data: newId, error } = await supabase.rpc('add_lesson', {
-        p_section_id: sectionId,
-        p_title: title
-      });
-      if (error) throw error;
-      await supabase.rpc('update_lesson', {
-        p_lesson_id: newId,
-        p_title: title,
-        p_video_url: videoUrl,
-        p_image_url: imageUrl,
-        p_rich_text_content: text,
-        p_external_resources: resources
-      });
-    }
-    document.getElementById('lesson-modal').close();
-    await resetToDraftIfRevision();
-    await reloadSections(document.getElementById('sections-container'));
-  } catch (err) {
-    console.error('Save lesson error:', err);
-    alert('เกิดข้อผิดพลาด: ' + err.message);
-  }
-}
-
-async function saveCourseMeta() {
-  const title = document.getElementById('course-title').value.trim();
-  const desc = document.getElementById('course-desc').value.trim();
-  const thumb = document.getElementById('course-thumb').value.trim();
-  const supabase = await getSupabaseClient();
-  await supabase.rpc('update_course', {
-    p_user_id: currentUser.id,
-    p_course_id: courseId,
-    p_title: title,
-    p_description: desc || null,
-    p_thumbnail_url: thumb || null
+  attachLessonFormEvents(form, sectionId, null, () => {
+    form.remove();
   });
-  await resetToDraftIfRevision();
-  alert('บันทึกข้อมูลคอร์สแล้ว');
 }
 
+// ================================================================
+//  INLINE EDIT LESSON (normalises rich_text property)
+// ================================================================
+async function editLessonInline(sectionId, lessonId) {
+  const container = document.getElementById('sections-container');
+  const sectionDiv = container.querySelector(`.edit-lesson-btn[data-lesson-id="${lessonId}"]`).closest('.bg-gray-900');
+  
+  const lessonRow = sectionDiv.querySelector(`.lesson-toggle[data-lesson-id="${lessonId}"]`);
+  if (!lessonRow) return;
+  
+  const supabase = await getSupabaseClient();
+  const { data: lessonData, error: lessonErr } = await supabase.rpc('get_lesson_by_id', {
+    p_lesson_id: lessonId
+  });
+  if (lessonErr || !lessonData?.length) return;
+  const lesson = lessonData[0];
+  
+  // ✅ Normalise field name so the form builder works with lesson.rich_text
+  lesson.rich_text = lesson.rich_text_content || '';
+
+  lessonRow.style.display = 'none';
+
+  const form = document.createElement('div');
+  form.className = 'inline-edit-form bg-gray-800 rounded-lg p-3 mt-2 border border-gray-700';
+  form.innerHTML = buildLessonFormHTML(lesson);
+  lessonRow.parentNode.insertBefore(form, lessonRow.nextSibling);
+
+  attachLessonFormEvents(form, sectionId, lessonId, () => {
+    form.remove();
+    lessonRow.style.display = '';
+  });
+}
+
+// ================================================================
+//  FORM HTML BUILDER (separated text blocks, uses lesson.rich_text)
+// ================================================================
+function buildLessonFormHTML(lesson = null) {
+  const hasVideo = lesson?.video_url ? true : false;
+  const hasImage = lesson?.image_url ? true : false;
+  const hasText = lesson?.rich_text ? true : false;
+  const hasResources = lesson?.external_resources ? true : false;
+
+  const textSections = (hasText && lesson.rich_text.trim() !== '') 
+    ? lesson.rich_text.split('<!--SEP-->') 
+    : [''];
+
+  const resourceItems = (hasResources && lesson.external_resources.trim() !== '') 
+    ? lesson.external_resources.split(',') 
+    : [''];
+
+  return `
+    <div class="space-y-3">
+      <input type="text" class="inline-lesson-title w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="ชื่อบทเรียน" value="${escapeHTML(lesson?.title || '')}" autofocus>
+      
+      <div class="grid grid-cols-2 gap-2">
+        <label class="flex items-center gap-2 text-gray-300 text-sm">
+          <input type="checkbox" class="inline-content-type" value="video" ${hasVideo ? 'checked' : ''}> วิดีโอ
+        </label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm">
+          <input type="checkbox" class="inline-content-type" value="image" ${hasImage ? 'checked' : ''}> รูปภาพ
+        </label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm">
+          <input type="checkbox" class="inline-content-type" value="text" ${hasText ? 'checked' : ''}> ข้อความ
+        </label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm">
+          <input type="checkbox" class="inline-content-type" value="resources" ${hasResources ? 'checked' : ''}> แหล่งข้อมูล
+        </label>
+      </div>
+
+      <!-- Video URL (single) -->
+      <div class="inline-video-fields ${!hasVideo ? 'hidden' : ''}">
+        <label class="text-sm text-gray-400">URL วิดีโอ</label>
+        <input type="text" class="inline-lesson-video w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.video_url || '')}">
+      </div>
+
+      <!-- Image URL (single) -->
+      <div class="inline-image-fields ${!hasImage ? 'hidden' : ''}">
+        <label class="text-sm text-gray-400">URL รูปภาพ</label>
+        <input type="text" class="inline-lesson-image w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.image_url || '')}">
+      </div>
+
+      <!-- Rich Text Content (with ADD button, blocks separated by border) -->
+      <div class="inline-text-fields ${!hasText ? 'hidden' : ''}">
+        <label class="text-sm text-gray-400">เนื้อหา</label>
+        <div class="text-contents-container space-y-3">
+          ${textSections.map((text, idx) => `
+            <div class="space-y-2 ${idx > 0 ? 'border-t border-gray-700 pt-3' : ''}">
+              <div class="flex flex-wrap gap-1 rich-toolbar">
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="bold"><i class="bi bi-type-bold"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="italic"><i class="bi bi-type-italic"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="underline"><i class="bi bi-type-underline"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="strikeThrough"><i class="bi bi-type-strikethrough"></i></button>
+              </div>
+              <div class="inline-lesson-text w-full bg-gray-700 rounded p-2 text-white text-sm min-h-[80px] focus:outline-none" contenteditable="true">${text}</div>
+            </div>
+          `).join('')}
+        </div>
+        <button type="button" class="add-text-btn text-xs text-brand hover:underline mt-2"><i class="bi bi-plus"></i> เพิ่มข้อความ</button>
+      </div>
+
+      <!-- External Resources (each on its own line, with ADD button) -->
+      <div class="inline-resources-fields ${!hasResources ? 'hidden' : ''}">
+        <label class="text-sm text-gray-400">แหล่งข้อมูลเพิ่มเติม</label>
+        <div class="resources-container space-y-2">
+          ${resourceItems.map(r => `
+            <input type="text" class="inline-lesson-resources w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="URL หรือข้อความ" value="${escapeHTML(r.trim())}">
+          `).join('')}
+        </div>
+        <button type="button" class="add-resource-btn text-xs text-brand hover:underline mt-1"><i class="bi bi-plus"></i> เพิ่มแหล่งข้อมูล</button>
+      </div>
+
+      <div class="flex justify-end gap-2">
+        <button class="cancel-inline-lesson-btn btn-outline-brand text-sm py-1.5 px-3">ยกเลิก</button>
+        <button class="save-inline-lesson-btn btn-brand text-sm py-1.5 px-3">บันทึก</button>
+      </div>
+    </div>`;
+}
+
+// ================================================================
+//  FORM EVENT HANDLER
+// ================================================================
+function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
+  // Toggle content type fields
+  form.querySelectorAll('.inline-content-type').forEach(cb => {
+    cb.addEventListener('change', () => {
+      form.querySelector('.inline-video-fields').classList.toggle('hidden', !form.querySelector('.inline-content-type[value="video"]').checked);
+      form.querySelector('.inline-image-fields').classList.toggle('hidden', !form.querySelector('.inline-content-type[value="image"]').checked);
+      form.querySelector('.inline-text-fields').classList.toggle('hidden', !form.querySelector('.inline-content-type[value="text"]').checked);
+      form.querySelector('.inline-resources-fields').classList.toggle('hidden', !form.querySelector('.inline-content-type[value="resources"]').checked);
+    });
+  });
+
+  // ADD buttons
+  form.querySelector('.add-text-btn')?.addEventListener('click', () => {
+    const container = form.querySelector('.text-contents-container');
+    const div = document.createElement('div');
+    div.className = 'space-y-2 border-t border-gray-700 pt-3';
+    div.innerHTML = `
+      <div class="flex flex-wrap gap-1 rich-toolbar">
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="bold"><i class="bi bi-type-bold"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="italic"><i class="bi bi-type-italic"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="underline"><i class="bi bi-type-underline"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="strikeThrough"><i class="bi bi-type-strikethrough"></i></button>
+      </div>
+      <div class="inline-lesson-text w-full bg-gray-700 rounded p-2 text-white text-sm min-h-[80px] focus:outline-none" contenteditable="true"></div>
+    `;
+    container.appendChild(div);
+  });
+
+  form.querySelector('.add-resource-btn')?.addEventListener('click', () => {
+    const container = form.querySelector('.resources-container');
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'inline-lesson-resources w-full bg-gray-700 rounded p-2 text-white text-sm mt-2';
+    input.placeholder = 'URL หรือข้อความ';
+    container.appendChild(input);
+  });
+
+  // Rich Text Toolbar
+  form.querySelectorAll('.toolbar-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const command = btn.dataset.command;
+      document.execCommand(command, false, null);
+      btn.closest('.space-y-2')?.querySelector('.inline-lesson-text')?.focus();
+    });
+    btn.addEventListener('mousedown', (e) => e.preventDefault());
+  });
+
+  // Cancel
+  form.querySelector('.cancel-inline-lesson-btn').addEventListener('click', onCancel);
+
+  // Save
+  form.querySelector('.save-inline-lesson-btn').addEventListener('click', async () => {
+    const title = form.querySelector('.inline-lesson-title').value.trim();
+    if (!title) {
+      showToast('กรุณากรอกชื่อบทเรียน', 'error');
+      return;
+    }
+
+    // Only include values if the corresponding checkbox is checked
+    const videoChecked = form.querySelector('.inline-content-type[value="video"]').checked;
+    const imageChecked = form.querySelector('.inline-content-type[value="image"]').checked;
+    const textChecked = form.querySelector('.inline-content-type[value="text"]').checked;
+    const resourcesChecked = form.querySelector('.inline-content-type[value="resources"]').checked;
+
+    const videoUrl = videoChecked ? (form.querySelector('.inline-lesson-video')?.value.trim() || null) : null;
+    const imageUrl = imageChecked ? (form.querySelector('.inline-lesson-image')?.value.trim() || null) : null;
+    const texts = textChecked 
+      ? [...form.querySelectorAll('.inline-lesson-text')].map(el => el.innerHTML.trim()).filter(Boolean).join('<!--SEP-->') 
+      : null;
+    const resources = resourcesChecked 
+      ? [...form.querySelectorAll('.inline-lesson-resources')].map(i => i.value.trim()).filter(Boolean).join(',') 
+      : null;
+
+    const supabase = await getSupabaseClient();
+    try {
+      if (lessonId) {
+        await supabase.rpc('update_lesson', {
+          p_lesson_id: lessonId,
+          p_title: title,
+          p_video_url: videoUrl ? convertVideoUrl(videoUrl) : null,
+          p_image_url: imageUrl,
+          p_rich_text_content: texts,
+          p_external_resources: resources
+        });
+      } else {
+        const { data: newId } = await supabase.rpc('add_lesson', {
+          p_section_id: sectionId,
+          p_title: title
+        });
+        if (newId) {
+          await supabase.rpc('update_lesson', {
+            p_lesson_id: newId,
+            p_title: title,
+            p_video_url: videoUrl ? convertVideoUrl(videoUrl) : null,
+            p_image_url: imageUrl,
+            p_rich_text_content: texts,
+            p_external_resources: resources
+          });
+        }
+      }
+      showToast('บันทึกบทเรียนแล้ว', 'success');
+      await resetToDraftIfRevision();
+      await reloadSections(document.getElementById('sections-container'));
+    } catch (err) {
+      console.error(err);
+      showToast('เกิดข้อผิดพลาด: ' + err.message, 'error');
+    }
+  });
+}
+
+// ================================================================
+//  TOAST NOTIFICATION
+// ================================================================
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `fixed bottom-4 right-4 z-50 px-4 py-2 rounded-lg text-sm text-white ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} shadow-lg`;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// ================================================================
+//  UTILITY
+// ================================================================
 function escapeHTML(str) {
   const div = document.createElement('div');
   div.appendChild(document.createTextNode(str));
