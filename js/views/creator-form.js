@@ -2,6 +2,8 @@ import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
 import { navigate } from '../utils/router.js';
 
+const IMGBB_API_KEY = 'b5dedfe841575caa018fb970e5cb86f7'; // ✅ ใส่ key ของคุณ
+
 let currentUser = null;
 
 export async function render(container) {
@@ -36,8 +38,18 @@ export async function render(container) {
             <textarea id="course-desc" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand"></textarea>
           </div>
           <div>
-            <label class="block text-sm text-gray-400 mb-1">URL รูปปก</label>
-            <input type="url" id="course-thumb" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand">
+            <label class="block text-sm text-gray-400 mb-1">รูปปกคอร์ส</label>
+            <input type="file" id="course-thumb-upload" class="hidden" accept="image/*">
+            <div class="flex gap-2 items-center">
+              <input type="text" id="course-thumb" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand" placeholder="https://...">
+              <button type="button" id="upload-course-thumb-btn" class="btn-outline-brand text-sm py-2 px-3 whitespace-nowrap">
+                <i class="bi bi-upload"></i> อัปโหลด
+              </button>
+            </div>
+            <div id="course-thumb-preview" class="mt-2 hidden">
+              <img src="" class="h-32 rounded-lg object-cover border border-gray-700" />
+            </div>
+            <p id="upload-status" class="text-xs text-gray-500 mt-1 hidden"></p>
           </div>
           <div class="flex justify-end gap-3 pt-2">
             <button type="button" id="cancel-btn" class="btn-outline-brand text-sm py-2 px-4">ยกเลิก</button>
@@ -47,9 +59,49 @@ export async function render(container) {
       </div>
     </div>`;
 
+  // ปุ่มย้อนกลับ / ยกเลิก
   document.getElementById('back-btn').addEventListener('click', () => navigate('/creator'));
   document.getElementById('cancel-btn').addEventListener('click', () => navigate('/creator'));
 
+  // อัปโหลดรูปปก
+  document.getElementById('upload-course-thumb-btn').addEventListener('click', () => {
+    document.getElementById('course-thumb-upload').click();
+  });
+
+  document.getElementById('course-thumb-upload').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById('upload-status');
+    statusEl.classList.remove('hidden');
+    statusEl.textContent = 'กำลังอัปโหลด...';
+
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const json = await res.json();
+      if (json.success) {
+        document.getElementById('course-thumb').value = json.data.url;
+        const preview = document.getElementById('course-thumb-preview');
+        preview.classList.remove('hidden');
+        preview.querySelector('img').src = json.data.url;
+        statusEl.textContent = 'อัปโหลดสำเร็จ ✓';
+      } else {
+        statusEl.textContent = 'อัปโหลดล้มเหลว';
+      }
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = 'อัปโหลดล้มเหลว';
+    }
+  });
+
+  // ส่งฟอร์มสร้างคอร์ส
   document.getElementById('course-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('course-title').value.trim();
@@ -66,10 +118,9 @@ export async function render(container) {
       });
       if (error) throw error;
 
-      // data อาจเป็น string (uuid) หรือ object {id: uuid} ขึ้นอยู่กับฟังก์ชัน
       let newId = data;
       if (typeof data === 'object' && data !== null) {
-        newId = data.id || Object.values(data)[0]; // fallback
+        newId = data.id || Object.values(data)[0];
       }
       navigate(`/creator/edit/${newId}`);
     } catch (err) {
