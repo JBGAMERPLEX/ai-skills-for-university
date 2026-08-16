@@ -15,18 +15,20 @@ export function render(container) {
         </div>
 
         <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
-          <img src="images/team/66124440124.jpg" alt="วิศรุต มาสะอาด" class="w-24 h-24 rounded-full object-cover mx-auto mb-3 border-2 border-gray-700" />
-          <h3 class="text-white font-semibold">วิศรุต มาสะอาด</h3>
-          <p class="text-sm text-gray-400">รหัส 66124440124</p>
-          <p class="text-sm text-gray-300 mt-1">จัดการเนื้อหา</p>
-        </div>
-
-        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
           <img src="images/team/66124440131.jpg" alt="ธาริตกรณ์ แสงสว่าง" class="w-24 h-24 rounded-full object-cover mx-auto mb-3 border-2 border-gray-700" />
           <h3 class="text-white font-semibold">ธาริตกรณ์ แสงสว่าง</h3>
           <p class="text-sm text-gray-400">รหัส 66124440131</p>
           <p class="text-sm text-gray-300 mt-1">จัดการเนื้อหา</p>
         </div>
+
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+          <img src="images/team/66124440124.jpg" alt="วิศรุต มาสะอาด" class="w-24 h-24 rounded-full object-cover mx-auto mb-3 border-2 border-gray-700" />
+          <h3 class="text-white font-semibold">วิศรุต มาสะอาด</h3>
+          <p class="text-sm text-gray-400">รหัส 66124440124</p>
+          <p class="text-sm text-gray-300 mt-1">สร้างคอร์ส</p>
+        </div>
+
+
 
         <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
           <img src="images/team/66124440121.jpg" alt="ชนกานต์ พานทอง" class="w-24 h-24 rounded-full object-cover mx-auto mb-3 border-2 border-gray-700" />

@@ -30,7 +30,7 @@ function renderShell(root) {
         <div class="flex items-center gap-2">
           <span class="font-semibold text-white"><span class="text-brand">AI Skills</span> for University</span>
           <span class="hidden sm:inline opacity-50">|</span>
-          <span>© 2026 <a href="#/team" class="text-gray-400 hover:text-white transition">ทีมงาน ลาบเลิฟเวอร์</a></span>
+          <p>© 2026 <a href="#/team" class="text-gray-400 hover:text-white transition">ทีมงาน ลาบเลิฟเวอร์</a></p>
         </div>
         <div class="flex gap-3">
           <a href="#/about" class="hover:text-white transition">เกี่ยวกับเรา</a>

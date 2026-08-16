@@ -6,16 +6,8 @@ export function render(container) {
         <p>หากคุณมีข้อสงสัย ข้อเสนอแนะ หรือต้องการความช่วยเหลือ สามารถติดต่อเราได้ทางช่องทางต่อไปนี้:</p>
         <div class="space-y-3">
           <div class="flex items-center gap-3">
-            <i class="bi bi-envelope-fill text-brand text-xl"></i>
-            <span>Email: support@aiskills.in.th</span>
-          </div>
-          <div class="flex items-center gap-3">
             <i class="bi bi-facebook text-brand text-xl"></i>
-            <span>Facebook: fb.com/aiskillsforuniversity</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <i class="bi bi-discord text-brand text-xl"></i>
-            <span>Discord: discord.gg/aiskills</span>
+            <span>Facebook: <a href="https://fb.com/Thedeklnw007/" target="_blank" class="text-brand hover:underline">fb.com/Thedeklnw007/</a></span>
           </div>
         </div>
         <p class="text-sm text-gray-500 mt-4">เวลาทำการ: จันทร์ - ศุกร์ 09:00 - 17:00 น.</p>
