@@ -1,4 +1,3 @@
-// js/views/manager-review.js
 import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
 import { navigate } from '../utils/router.js';
@@ -113,29 +112,35 @@ export async function render(container, params) {
 
   document.getElementById('back-btn').addEventListener('click', () => navigate('/manager'));
 
-  async function doReview(status) {
-    const comment = document.getElementById('review-comment').value.trim();
-    const supabase = await getSupabaseClient();
-    await supabase.rpc('review_course', {
-      p_course_id: courseId,
-      p_status: status,
-      p_comment: comment || null
-    });
-    navigate('/manager');
-  }
-
-  document.getElementById('btn-approve').onclick = () => doReview('published');
-  document.getElementById('btn-revise').onclick = () => doReview('revision');
+  document.getElementById('btn-approve').addEventListener('click', () => handleReview('published'));
+  document.getElementById('btn-revise').addEventListener('click', () => handleReview('revision'));
 
   document.querySelectorAll('.lesson-toggle').forEach(toggle => {
     toggle.addEventListener('click', () => {
       const lessonId = toggle.dataset.lessonId;
       const content = document.getElementById(`content-${lessonId}`);
       const icon = document.getElementById(`icon-${lessonId}`);
-      content.classList.toggle('open');
-      icon.classList.toggle('rotate-180');
+      content?.classList.toggle('open');
+      icon?.classList.toggle('rotate-180');
     });
   });
+
+  async function handleReview(status) {
+    const comment = document.getElementById('review-comment').value.trim();
+    const supabase = await getSupabaseClient();
+    try {
+      await supabase.rpc('review_course', {
+        p_course_id: courseId,
+        p_status: status,
+        p_comment: comment || null,
+        p_reviewed_by: currentUser?.full_name || currentUser?.email || 'ผู้จัดการ'
+      });
+      navigate('/manager');
+    } catch (err) {
+      console.error(err);
+      alert('เกิดข้อผิดพลาด: ' + err.message);
+    }
+  }
 }
 
 function escapeHTML(str) {

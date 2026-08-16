@@ -4,6 +4,8 @@ import { getSupabaseClient } from '../services/supabase.js';
 import { navigate } from '../utils/router.js';
 import { convertVideoUrl } from '../utils/video-url.js';
 
+const IMGBB_API_KEY = 'b5dedfe841575caa018fb970e5cb86f7'; // ✅ ใส่ API Key ของคุณ
+
 let currentUser = null;
 let courseId = null;
 let saveCourseClickCount = 0;
@@ -73,8 +75,17 @@ function renderEditor(container, course, sections) {
             <input id="course-title" class="w-full bg-gray-800 rounded p-2 text-white mt-1" value="${escapeHTML(course.title)}">
           </div>
           <div>
-            <label class="text-sm text-gray-400">URL รูปปก</label>
-            <input id="course-thumb" class="w-full bg-gray-800 rounded p-2 text-white mt-1" value="${escapeHTML(course.thumbnail_url || '')}">
+            <label class="text-sm text-gray-400">รูปปกคอร์ส</label>
+            <input type="file" id="course-thumb-upload" class="hidden" accept="image/*">
+            <div class="flex gap-2 items-center mt-1">
+              <input type="text" id="course-thumb" class="w-full bg-gray-800 rounded p-2 text-white" placeholder="https://..." value="${escapeHTML(course.thumbnail_url || '')}">
+              <button type="button" id="upload-course-thumb-btn" class="btn-outline-brand text-sm py-2 px-3 whitespace-nowrap">
+                <i class="bi bi-upload"></i> อัปโหลด
+              </button>
+            </div>
+            <div id="course-thumb-preview" class="mt-2 ${course.thumbnail_url ? '' : 'hidden'}">
+              <img src="${escapeHTML(course.thumbnail_url || '')}" class="h-32 rounded-lg object-cover border border-gray-700" />
+            </div>
           </div>
           <div class="md:col-span-2">
             <label class="text-sm text-gray-400">คำอธิบาย</label>
@@ -102,6 +113,46 @@ function renderEditor(container, course, sections) {
   document.getElementById('add-section-btn').addEventListener('click', () => {
     addSectionInline();
   });
+
+  // ---------- Upload course thumbnail ----------
+  document.getElementById('upload-course-thumb-btn').addEventListener('click', () => {
+    document.getElementById('course-thumb-upload').click();
+  });
+
+  document.getElementById('course-thumb-upload').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const url = await uploadImageToImgBB(file);
+      document.getElementById('course-thumb').value = url;
+      const preview = document.getElementById('course-thumb-preview');
+      preview.classList.remove('hidden');
+      preview.querySelector('img').src = url;
+      showToast('อัปโหลดรูปปกสำเร็จ', 'success');
+    } catch (err) {
+      console.error(err);
+      showToast('อัปโหลดรูปปกล้มเหลว', 'error');
+    }
+  });
+}
+
+// ================================================================
+//  UPLOAD IMAGE TO IMGBB
+// ================================================================
+async function uploadImageToImgBB(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+    method: 'POST',
+    body: formData
+  });
+  const json = await res.json();
+  if (json.success) {
+    // ใช้ url ต้นฉบับ (ขนาดจริง)
+    return json.data.url;
+  } else {
+    throw new Error(json.error?.message || 'Upload failed');
+  }
 }
 
 // ================================================================
@@ -456,7 +507,7 @@ function addLessonInline(sectionId) {
 }
 
 // ================================================================
-//  INLINE EDIT LESSON (normalises rich_text property)
+//  INLINE EDIT LESSON
 // ================================================================
 async function editLessonInline(sectionId, lessonId) {
   const container = document.getElementById('sections-container');
@@ -472,7 +523,6 @@ async function editLessonInline(sectionId, lessonId) {
   if (lessonErr || !lessonData?.length) return;
   const lesson = lessonData[0];
   
-  // ✅ Normalise field name so the form builder works with lesson.rich_text
   lesson.rich_text = lesson.rich_text_content || '';
 
   lessonRow.style.display = 'none';
@@ -489,7 +539,7 @@ async function editLessonInline(sectionId, lessonId) {
 }
 
 // ================================================================
-//  FORM HTML BUILDER (separated text blocks, uses lesson.rich_text)
+//  FORM HTML BUILDER (with upload image button)
 // ================================================================
 function buildLessonFormHTML(lesson = null) {
   const hasVideo = lesson?.video_url ? true : false;
@@ -510,33 +560,35 @@ function buildLessonFormHTML(lesson = null) {
       <input type="text" class="inline-lesson-title w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="ชื่อบทเรียน" value="${escapeHTML(lesson?.title || '')}" autofocus>
       
       <div class="grid grid-cols-2 gap-2">
-        <label class="flex items-center gap-2 text-gray-300 text-sm">
-          <input type="checkbox" class="inline-content-type" value="video" ${hasVideo ? 'checked' : ''}> วิดีโอ
-        </label>
-        <label class="flex items-center gap-2 text-gray-300 text-sm">
-          <input type="checkbox" class="inline-content-type" value="image" ${hasImage ? 'checked' : ''}> รูปภาพ
-        </label>
-        <label class="flex items-center gap-2 text-gray-300 text-sm">
-          <input type="checkbox" class="inline-content-type" value="text" ${hasText ? 'checked' : ''}> ข้อความ
-        </label>
-        <label class="flex items-center gap-2 text-gray-300 text-sm">
-          <input type="checkbox" class="inline-content-type" value="resources" ${hasResources ? 'checked' : ''}> แหล่งข้อมูล
-        </label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm"><input type="checkbox" class="inline-content-type" value="video" ${hasVideo ? 'checked' : ''}> วิดีโอ</label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm"><input type="checkbox" class="inline-content-type" value="image" ${hasImage ? 'checked' : ''}> รูปภาพ</label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm"><input type="checkbox" class="inline-content-type" value="text" ${hasText ? 'checked' : ''}> ข้อความ</label>
+        <label class="flex items-center gap-2 text-gray-300 text-sm"><input type="checkbox" class="inline-content-type" value="resources" ${hasResources ? 'checked' : ''}> แหล่งข้อมูล</label>
       </div>
 
-      <!-- Video URL (single) -->
+      <!-- Video URL -->
       <div class="inline-video-fields ${!hasVideo ? 'hidden' : ''}">
         <label class="text-sm text-gray-400">URL วิดีโอ</label>
         <input type="text" class="inline-lesson-video w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.video_url || '')}">
       </div>
 
-      <!-- Image URL (single) -->
+      <!-- Image URL + Upload -->
       <div class="inline-image-fields ${!hasImage ? 'hidden' : ''}">
-        <label class="text-sm text-gray-400">URL รูปภาพ</label>
-        <input type="text" class="inline-lesson-image w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.image_url || '')}">
+        <label class="text-sm text-gray-400">รูปภาพ</label>
+        <input type="file" class="inline-lesson-image-upload hidden" accept="image/*">
+        <div class="flex gap-2 items-center">
+          <input type="text" class="inline-lesson-image w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.image_url || '')}">
+          <button type="button" class="upload-image-btn btn-outline-brand text-sm py-2 px-3 whitespace-nowrap">
+            <i class="bi bi-upload"></i> อัปโหลด
+          </button>
+        </div>
+        <div class="mt-2 ${lesson?.image_url ? '' : 'hidden'}">
+          <img src="${escapeHTML(lesson?.image_url || '')}" class="max-h-32 rounded-lg object-cover border border-gray-700" />
+        </div>
+        <p class="upload-image-status text-xs text-gray-500 mt-1 hidden">กำลังอัปโหลด...</p>
       </div>
 
-      <!-- Rich Text Content (with ADD button, blocks separated by border) -->
+      <!-- Rich Text Content -->
       <div class="inline-text-fields ${!hasText ? 'hidden' : ''}">
         <label class="text-sm text-gray-400">เนื้อหา</label>
         <div class="text-contents-container space-y-3">
@@ -555,7 +607,7 @@ function buildLessonFormHTML(lesson = null) {
         <button type="button" class="add-text-btn text-xs text-brand hover:underline mt-2"><i class="bi bi-plus"></i> เพิ่มข้อความ</button>
       </div>
 
-      <!-- External Resources (each on its own line, with ADD button) -->
+      <!-- External Resources -->
       <div class="inline-resources-fields ${!hasResources ? 'hidden' : ''}">
         <label class="text-sm text-gray-400">แหล่งข้อมูลเพิ่มเติม</label>
         <div class="resources-container space-y-2">
@@ -613,6 +665,33 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
     container.appendChild(input);
   });
 
+  // Image upload
+  form.querySelector('.upload-image-btn')?.addEventListener('click', () => {
+    form.querySelector('.inline-lesson-image-upload').click();
+  });
+
+  form.querySelector('.inline-lesson-image-upload')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const statusEl = form.querySelector('.upload-image-status');
+    statusEl.classList.remove('hidden');
+    statusEl.textContent = 'กำลังอัปโหลด...';
+    try {
+      const url = await uploadImageToImgBB(file);
+      form.querySelector('.inline-lesson-image').value = url;
+      // Update preview if exists
+      const previewImg = form.querySelector('img');
+      if (previewImg) {
+        previewImg.src = url;
+        previewImg.parentElement.classList.remove('hidden');
+      }
+      statusEl.textContent = 'อัปโหลดสำเร็จ ✓';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = 'อัปโหลดล้มเหลว';
+    }
+  });
+
   // Rich Text Toolbar
   form.querySelectorAll('.toolbar-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -635,7 +714,6 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
       return;
     }
 
-    // Only include values if the corresponding checkbox is checked
     const videoChecked = form.querySelector('.inline-content-type[value="video"]').checked;
     const imageChecked = form.querySelector('.inline-content-type[value="image"]').checked;
     const textChecked = form.querySelector('.inline-content-type[value="text"]').checked;
