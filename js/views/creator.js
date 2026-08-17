@@ -59,36 +59,45 @@ async function loadCourses() {
           ${course.review_comment ? `<p class="text-xs text-gray-500 mt-1">💬 ${escapeHTML(course.review_comment)}</p>` : ''}
         </div>
         <div class="flex gap-2">
-          ${course.status === 'draft' || course.status === 'rejected' || course.status === 'revision' ? `
-            <button class="edit-btn p-2 text-gray-400 hover:text-white transition" data-id="${course.id}" title="แก้ไข">
-              <i class="bi bi-pencil"></i>
-            </button>
-          ` : ''}
+          <!-- ปุ่มแก้ไข: แสดงทุกสถานะ -->
+          <button class="edit-btn p-2 text-gray-400 hover:text-white transition" data-id="${course.id}" title="แก้ไข">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <!-- ปุ่มส่งตรวจ: แสดงเฉพาะ draft (รวมทั้งที่เพิ่งแก้ไขแล้วกลับมา draft) -->
           ${course.status === 'draft' ? `
             <button class="submit-btn p-2 text-green-400 hover:text-green-300 transition" data-id="${course.id}" title="ส่งตรวจ">
               <i class="bi bi-send"></i>
             </button>
           ` : ''}
+          <!-- ปุ่มลบ: แสดงทุกสถานะ -->
           <button class="delete-btn p-2 text-red-400 hover:text-red-300 transition" data-id="${course.id}" title="ลบ">
             <i class="bi bi-trash"></i>
           </button>
         </div>
       </div>`).join('');
 
+    // Edit buttons
     document.querySelectorAll('.edit-btn').forEach(b => {
-      b.addEventListener('click', () => {
-        navigate(`/creator/edit/${b.dataset.id}`);
-      });
+      b.addEventListener('click', () => navigate(`/creator/edit/${b.dataset.id}`));
     });
 
+    // Delete buttons (double-click to confirm)
     document.querySelectorAll('.delete-btn').forEach(b => {
+      let clickCount = 0;
+      let resetTimer;
+
       b.addEventListener('click', async () => {
-        const confirmed = await showConfirmModal(
-          'คุณแน่ใจที่จะลบคอร์สนี้? การกระทำนี้ไม่สามารถย้อนกลับได้',
-          'ลบ',
-          'btn-outline-brand !border-red-500 !text-red-500 hover:!bg-red-500/10'
-        );
-        if (confirmed) {
+        clickCount++;
+        if (clickCount === 1) {
+          b.classList.add('text-red-500');
+          b.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+          resetTimer = setTimeout(() => {
+            clickCount = 0;
+            b.classList.remove('text-red-500');
+            b.innerHTML = '<i class="bi bi-trash"></i>';
+          }, 3000);
+        } else if (clickCount === 2) {
+          clearTimeout(resetTimer);
           const supabase = await getSupabaseClient();
           await supabase.rpc('delete_course', { p_user_id: currentUser.id, p_course_id: b.dataset.id });
           await loadCourses();
@@ -96,14 +105,23 @@ async function loadCourses() {
       });
     });
 
+    // Submit buttons (double-click to confirm)
     document.querySelectorAll('.submit-btn').forEach(b => {
+      let clickCount = 0;
+      let resetTimer;
+
       b.addEventListener('click', async () => {
-        const confirmed = await showConfirmModal(
-          'ส่งคอร์สนี้ให้ผู้จัดการตรวจสอบ?',
-          'ส่งตรวจ',
-          'btn-outline-brand !border-green-500 !text-green-500 hover:!bg-green-500/10'
-        );
-        if (confirmed) {
+        clickCount++;
+        if (clickCount === 1) {
+          b.classList.add('text-green-500');
+          b.innerHTML = '<i class="bi bi-check-lg"></i> กดอีกครั้งเพื่อยืนยัน';
+          resetTimer = setTimeout(() => {
+            clickCount = 0;
+            b.classList.remove('text-green-500');
+            b.innerHTML = '<i class="bi bi-send"></i>';
+          }, 3000);
+        } else if (clickCount === 2) {
+          clearTimeout(resetTimer);
           const supabase = await getSupabaseClient();
           await supabase.rpc('submit_for_review', { p_user_id: currentUser.id, p_course_id: b.dataset.id });
           await loadCourses();
@@ -128,7 +146,6 @@ function statusText(s) {
     pending: 'รอตรวจสอบ',
     approved: 'เผยแพร่แล้ว',
     published: 'เผยแพร่แล้ว',
-    rejected: 'ถูกปฏิเสธ',
     revision: 'ขอแก้ไข'
   };
   return map[s] || s;

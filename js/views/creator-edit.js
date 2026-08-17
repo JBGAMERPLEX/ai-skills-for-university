@@ -148,7 +148,6 @@ async function uploadImageToImgBB(file) {
   });
   const json = await res.json();
   if (json.success) {
-    // ใช้ url ต้นฉบับ (ขนาดจริง)
     return json.data.url;
   } else {
     throw new Error(json.error?.message || 'Upload failed');
@@ -341,7 +340,6 @@ function renderSections(container, sections) {
     });
   });
 
-  // Double-click to delete section
   container.querySelectorAll('.delete-section-btn').forEach(b => {
     let clickCount = 0;
     let resetTimer;
@@ -390,7 +388,6 @@ function renderSections(container, sections) {
     });
   });
 
-  // Double-click to delete lesson
   container.querySelectorAll('.delete-lesson-btn').forEach(btn => {
     let clickCount = 0;
     let resetTimer;
@@ -557,7 +554,7 @@ function buildLessonFormHTML(lesson = null) {
 
   return `
     <div class="space-y-3">
-      <input type="text" class="inline-lesson-title w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="ชื่อบทเรียน" value="${escapeHTML(lesson?.title || '')}" autofocus>
+      <input type="text" class="inline-lesson-title w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="ชื่อบทเรียน" value="${escapeHTML(lesson?.title || '')}" autofocus autocapitalize="off" autocomplete="off" spellcheck="false">
       
       <div class="grid grid-cols-2 gap-2">
         <label class="flex items-center gap-2 text-gray-300 text-sm"><input type="checkbox" class="inline-content-type" value="video" ${hasVideo ? 'checked' : ''}> วิดีโอ</label>
@@ -569,7 +566,7 @@ function buildLessonFormHTML(lesson = null) {
       <!-- Video URL -->
       <div class="inline-video-fields ${!hasVideo ? 'hidden' : ''}">
         <label class="text-sm text-gray-400">URL วิดีโอ</label>
-        <input type="text" class="inline-lesson-video w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.video_url || '')}">
+        <input type="text" class="inline-lesson-video w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.video_url || '')}" autocapitalize="off" autocomplete="off" spellcheck="false">
       </div>
 
       <!-- Image URL + Upload -->
@@ -577,7 +574,7 @@ function buildLessonFormHTML(lesson = null) {
         <label class="text-sm text-gray-400">รูปภาพ</label>
         <input type="file" class="inline-lesson-image-upload hidden" accept="image/*">
         <div class="flex gap-2 items-center">
-          <input type="text" class="inline-lesson-image w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.image_url || '')}">
+          <input type="text" class="inline-lesson-image w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="https://..." value="${escapeHTML(lesson?.image_url || '')}" autocapitalize="off" autocomplete="off" spellcheck="false">
           <button type="button" class="upload-image-btn btn-outline-brand text-sm py-2 px-3 whitespace-nowrap">
             <i class="bi bi-upload"></i> อัปโหลด
           </button>
@@ -595,10 +592,10 @@ function buildLessonFormHTML(lesson = null) {
           ${textSections.map((text, idx) => `
             <div class="space-y-2 ${idx > 0 ? 'border-t border-gray-700 pt-3' : ''}">
               <div class="flex flex-wrap gap-1 rich-toolbar">
-                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="bold"><i class="bi bi-type-bold"></i></button>
-                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="italic"><i class="bi bi-type-italic"></i></button>
-                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="underline"><i class="bi bi-type-underline"></i></button>
-                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="strikeThrough"><i class="bi bi-type-strikethrough"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="bold" style="touch-action: manipulation;"><i class="bi bi-type-bold"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="italic" style="touch-action: manipulation;"><i class="bi bi-type-italic"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="underline" style="touch-action: manipulation;"><i class="bi bi-type-underline"></i></button>
+                <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="strikeThrough" style="touch-action: manipulation;"><i class="bi bi-type-strikethrough"></i></button>
               </div>
               <div class="inline-lesson-text w-full bg-gray-700 rounded p-2 text-white text-sm min-h-[80px] focus:outline-none" contenteditable="true">${text}</div>
             </div>
@@ -612,15 +609,15 @@ function buildLessonFormHTML(lesson = null) {
         <label class="text-sm text-gray-400">แหล่งข้อมูลเพิ่มเติม</label>
         <div class="resources-container space-y-2">
           ${resourceItems.map(r => `
-            <input type="text" class="inline-lesson-resources w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="URL หรือข้อความ" value="${escapeHTML(r.trim())}">
+            <input type="text" class="inline-lesson-resources w-full bg-gray-700 rounded p-2 text-white text-sm" placeholder="URL หรือข้อความ" value="${escapeHTML(r.trim())}" autocapitalize="off" autocomplete="off" spellcheck="false">
           `).join('')}
         </div>
         <button type="button" class="add-resource-btn text-xs text-brand hover:underline mt-1"><i class="bi bi-plus"></i> เพิ่มแหล่งข้อมูล</button>
       </div>
 
       <div class="flex justify-end gap-2">
-        <button class="cancel-inline-lesson-btn btn-outline-brand text-sm py-1.5 px-3">ยกเลิก</button>
-        <button class="save-inline-lesson-btn btn-brand text-sm py-1.5 px-3">บันทึก</button>
+        <button class="cancel-inline-lesson-btn btn-outline-brand text-sm py-3 px-4" style="touch-action: manipulation;">ยกเลิก</button>
+        <button class="save-inline-lesson-btn btn-brand text-sm py-3 px-4" style="touch-action: manipulation;">บันทึก</button>
       </div>
     </div>`;
 }
@@ -646,10 +643,10 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
     div.className = 'space-y-2 border-t border-gray-700 pt-3';
     div.innerHTML = `
       <div class="flex flex-wrap gap-1 rich-toolbar">
-        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="bold"><i class="bi bi-type-bold"></i></button>
-        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="italic"><i class="bi bi-type-italic"></i></button>
-        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="underline"><i class="bi bi-type-underline"></i></button>
-        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-2 py-1 rounded text-xs" data-command="strikeThrough"><i class="bi bi-type-strikethrough"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="bold" style="touch-action: manipulation;"><i class="bi bi-type-bold"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="italic" style="touch-action: manipulation;"><i class="bi bi-type-italic"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="underline" style="touch-action: manipulation;"><i class="bi bi-type-underline"></i></button>
+        <button type="button" class="toolbar-btn text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-xs" data-command="strikeThrough" style="touch-action: manipulation;"><i class="bi bi-type-strikethrough"></i></button>
       </div>
       <div class="inline-lesson-text w-full bg-gray-700 rounded p-2 text-white text-sm min-h-[80px] focus:outline-none" contenteditable="true"></div>
     `;
@@ -662,6 +659,9 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
     input.type = 'text';
     input.className = 'inline-lesson-resources w-full bg-gray-700 rounded p-2 text-white text-sm mt-2';
     input.placeholder = 'URL หรือข้อความ';
+    input.autocapitalize = 'off';
+    input.autocomplete = 'off';
+    input.spellcheck = false;
     container.appendChild(input);
   });
 
@@ -679,7 +679,6 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
     try {
       const url = await uploadImageToImgBB(file);
       form.querySelector('.inline-lesson-image').value = url;
-      // Update preview if exists
       const previewImg = form.querySelector('img');
       if (previewImg) {
         previewImg.src = url;
@@ -701,6 +700,10 @@ function attachLessonFormEvents(form, sectionId, lessonId, onCancel) {
       btn.closest('.space-y-2')?.querySelector('.inline-lesson-text')?.focus();
     });
     btn.addEventListener('mousedown', (e) => e.preventDefault());
+    btn.addEventListener('touchstart', (e) => {
+      // ป้องกัน zoom บน iOS
+      e.preventDefault();
+    });
   });
 
   // Cancel
