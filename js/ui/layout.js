@@ -1,3 +1,4 @@
+// js/ui/layout.js
 import { navigate } from '../utils/router.js';
 import { signOut, getSession, getProfile } from '../services/auth.js';
 
@@ -90,7 +91,7 @@ function updateNavbarUI() {
           <a href="#/my-courses" class="block px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">คอร์สของฉัน</a>
           ${dashboardLinkDesktop}
           <a id="profile-link" href="#/profile" class="block px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">โปรไฟล์</a>
-          <button id="logout-btn" class="w-full text-left px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">ออกจากระบบ</button>
+          <button class="logout-btn w-full text-left px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">ออกจากระบบ</button>
         </div>
       </div>`;
 
@@ -99,7 +100,7 @@ function updateNavbarUI() {
       <a href="#/my-courses" class="block py-2 text-sm text-gray-400 hover:text-white">คอร์สของฉัน</a>
       ${dashboardLinkMobile}
       <a href="#/profile" class="block py-2 text-sm text-gray-400 hover:text-white">โปรไฟล์</a>
-      <button id="logout-btn" class="block w-full text-left py-2 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
+      <button class="logout-btn block w-full text-left py-2 text-sm text-gray-400 hover:text-white">ออกจากระบบ</button>`;
   } else {
     desktopMenu = `
       <div class="flex items-center gap-2">
@@ -115,16 +116,19 @@ function updateNavbarUI() {
   navbar.innerHTML = `
     <div class="max-w-7xl mx-auto px-3 flex items-center justify-between h-12">
       ${brandHTML}
+      <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-4 text-sm">
         <a href="#/home" class="text-gray-400 hover:text-white transition">หน้าหลัก</a>
         <a href="#/courses" class="text-gray-400 hover:text-white transition">คอร์สทั้งหมด</a>
         <a href="#/members" class="text-gray-400 hover:text-white transition">สมาชิก</a>
         ${desktopMenu}
       </div>
+      <!-- Mobile Toggle -->
       <button id="mobile-toggle" class="md:hidden p-1.5 text-gray-400 hover:text-white">
         <i class="bi bi-list text-xl"></i>
       </button>
     </div>
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden px-3 pb-2 space-y-1">
       <a href="#/home" class="block py-2 text-sm text-gray-400 hover:text-white">หน้าหลัก</a>
       <a href="#/courses" class="block py-2 text-sm text-gray-400 hover:text-white">คอร์สทั้งหมด</a>
@@ -137,7 +141,7 @@ function updateNavbarUI() {
     document.getElementById('mobile-menu').classList.toggle('hidden');
   });
 
-  // ปิดเมนูเมื่อแตะลิงก์หรือปุ่ม
+  // ปิดเมนูมือถือเมื่อแตะลิงก์หรือปุ่ม
   document.querySelectorAll('#mobile-menu a, #mobile-menu button').forEach(el => {
     el.addEventListener('click', () => {
       document.getElementById('mobile-menu').classList.add('hidden');
@@ -165,17 +169,18 @@ function updateNavbarUI() {
     btn.addEventListener('click', () => navigate('/register'));
   });
 
-  // Logout buttons
-  if (currentUser) {
-    document.querySelectorAll('.logout-btn').forEach(btn => {
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        await signOut();
-        window.dispatchEvent(new Event('auth-change'));
-        navigate('/home');
-      });
+  // ✅ Logout buttons (ทั้ง desktop และ mobile)
+  document.querySelectorAll('.logout-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await signOut();
+      window.dispatchEvent(new Event('auth-change'));
+      navigate('/home');
     });
+  });
 
+  // Event listeners อื่น ๆ สำหรับผู้ใช้ที่ล็อกอิน
+  if (currentUser) {
     document.getElementById('profile-link')?.addEventListener('click', (e) => {
       e.preventDefault();
       navigate('/profile');
