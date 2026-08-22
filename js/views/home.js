@@ -1,3 +1,4 @@
+// js/views/home.js
 import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
 
@@ -6,7 +7,7 @@ export async function render(container) {
 
   container.innerHTML = `
     <div class="fade-up">
-      <!-- Hero -->
+      <!-- Hero Section -->
       <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-950 border border-gray-800">
         <div class="absolute inset-0 opacity-10 pointer-events-none">
           <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand rounded-full blur-3xl"></div>
@@ -20,9 +21,6 @@ export async function render(container) {
             เรียนรู้คอร์สคุณภาพจากผู้เชี่ยวชาญ เข้าถึงได้ทุกที่ทุกเวลา พร้อมระบบติดตามความก้าวหน้า
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
-            <a href="#/courses" class="btn-brand text-lg px-8 py-3 gap-2 inline-flex items-center">
-              <i class="bi bi-play-circle-fill"></i> เริ่มเรียนเลย
-            </a>
             <a href="#/courses" class="btn-outline-brand text-lg px-8 py-3 gap-2 inline-flex items-center">
               <i class="bi bi-collection-play"></i> ดูคอร์สทั้งหมด
             </a>
@@ -36,7 +34,9 @@ export async function render(container) {
           <i class="bi bi-fire text-brand"></i> คอร์สยอดนิยม
         </h2>
         <div id="popular-courses" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="col-span-full text-center py-6"><span class="loading loading-spinner loading-lg"></span></div>
+          <div class="col-span-full flex justify-center py-6">
+            <div class="animate-spin h-8 w-8 border-4 border-brand border-t-transparent rounded-full"></div>
+          </div>
         </div>
       </div>
 
@@ -46,12 +46,13 @@ export async function render(container) {
           <i class="bi bi-clock-history text-blue-400"></i> คอร์สมาใหม่
         </h2>
         <div id="new-courses" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="col-span-full text-center py-6"><span class="loading loading-spinner loading-lg"></span></div>
+          <div class="col-span-full flex justify-center py-6">
+            <div class="animate-spin h-8 w-8 border-4 border-brand border-t-transparent rounded-full"></div>
+          </div>
         </div>
       </div>
     </div>`;
 
-  // โหลดคอร์ส
   await loadPopularCourses();
   await loadNewCourses();
 }
@@ -62,11 +63,11 @@ async function loadPopularCourses() {
   if (!container) return;
 
   try {
-    // ใช้ RPC ที่สร้างไว้แล้ว (get_courses_with_stats) หรือ query เอง
+    // ใช้ RPC get_courses_with_stats (ตอนนี้ student_count = จำนวนผู้สมัครเรียน)
     const { data, error } = await supabase.rpc('get_courses_with_stats', { p_search: null });
     if (error) throw error;
 
-    // เรียงตามจำนวนผู้เรียนจากมากไปน้อย และเอาเฉพาะ 4 อันแรก
+    // เรียงตามจำนวนผู้เรียน (ผู้สมัคร) จากมากไปน้อย
     const sorted = data
       ?.filter(c => c.status === 'published')
       .sort((a, b) => b.student_count - a.student_count)

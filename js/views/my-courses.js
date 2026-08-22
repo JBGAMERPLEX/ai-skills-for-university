@@ -15,8 +15,32 @@ export async function render(container) {
     <div class="fade-up max-w-5xl mx-auto">
       <h2 class="text-3xl font-bold text-white mb-8">คอร์สของฉัน</h2>
 
+      <!-- สถิติ Dashboard -->
+      <div id="stats-container" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+          <i class="bi bi-book text-blue-400 text-2xl"></i>
+          <p id="stat-enrolled" class="text-2xl font-bold text-white mt-2">-</p>
+          <p class="text-xs text-gray-400 mt-1">สมัครเรียน</p>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+          <i class="bi bi-arrow-repeat text-yellow-400 text-2xl"></i>
+          <p id="stat-inprogress" class="text-2xl font-bold text-white mt-2">-</p>
+          <p class="text-xs text-gray-400 mt-1">กำลังเรียน</p>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+          <i class="bi bi-check-circle text-green-400 text-2xl"></i>
+          <p id="stat-completed" class="text-2xl font-bold text-white mt-2">-</p>
+          <p class="text-xs text-gray-400 mt-1">เรียนจบ</p>
+        </div>
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center">
+          <i class="bi bi-clock text-brand text-2xl"></i>
+          <p id="stat-time" class="text-2xl font-bold text-white mt-2">-</p>
+          <p class="text-xs text-gray-400 mt-1">ชั่วโมงเรียน</p>
+        </div>
+      </div>
+
       <!-- กำลังเรียน -->
-      <div id="progress-section" class="mb-12">
+      <div class="mb-10">
         <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
           <i class="bi bi-arrow-repeat text-green-400"></i> กำลังเรียน
         </h3>
@@ -26,7 +50,7 @@ export async function render(container) {
       </div>
 
       <!-- เรียนจบแล้ว -->
-      <div id="completed-section" class="mb-12">
+      <div class="mb-10">
         <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
           <i class="bi bi-check-circle text-blue-400"></i> เรียนจบแล้ว
         </h3>
@@ -36,7 +60,7 @@ export async function render(container) {
       </div>
 
       <!-- บุ๊กมาร์ก -->
-      <div id="bookmark-section">
+      <div>
         <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
           <i class="bi bi-bookmark-heart text-red-400"></i> บุ๊กมาร์ก
         </h3>
@@ -46,7 +70,30 @@ export async function render(container) {
       </div>
     </div>`;
 
-  await Promise.all([loadInProgress(), loadCompleted(), loadBookmarks()]);
+  await Promise.all([loadStats(), loadInProgress(), loadCompleted(), loadBookmarks()]);
+}
+
+async function loadStats() {
+  const supabase = await getSupabaseClient();
+  try {
+    const { data, error } = await supabase.rpc('get_learner_stats', {
+      p_user_id: currentUser.id
+    });
+
+    if (error) throw error;
+    if (!data || data.length === 0) return;
+
+    const stats = data[0];
+    document.getElementById('stat-enrolled').textContent = stats.enrolled_courses || 0;
+    document.getElementById('stat-inprogress').textContent = stats.in_progress_courses || 0;
+    document.getElementById('stat-completed').textContent = stats.completed_courses || 0;
+    
+    const totalMinutes = stats.total_minutes || 0;
+    const hours = Math.floor(totalMinutes / 60);
+    document.getElementById('stat-time').textContent = hours;
+  } catch (err) {
+    console.error('Load stats error:', err);
+  }
 }
 
 async function loadInProgress() {
@@ -81,7 +128,7 @@ async function loadInProgress() {
             <progress class="progress progress-primary w-full h-1.5 mb-2" value="${progress.completed_lessons}" max="${progress.total_lessons}"></progress>
             <div class="flex justify-between items-center">
               <span class="text-xs text-gray-400">${progress.completed_lessons}/${progress.total_lessons} บทเรียน</span>
-              <a href="#/course/${course.id}" class="btn-brand text-xs py-1 px-3">เรียนต่อ</a>
+              <a href="#/learn/${course.id}" class="btn-brand text-xs py-1 px-3">เรียนต่อ</a>
             </div>
           </div>
         </div>`;
@@ -127,8 +174,9 @@ async function loadCompleted() {
               <span>เรียนจบแล้ว</span>
             </div>
             <div class="flex gap-2">
-              <a href="#/course/${course.id}" class="btn-brand text-xs py-1 px-3">ดูอีกครั้ง</a>
-              <a href="#/certificate/${course.id}" class="btn-outline-brand !border-yellow-500 !text-yellow-500 hover:!bg-yellow-500/10 text-xs py-1 px-3">รับใบประกาศ</a>
+              <a href="#/learn/${course.id}" class="btn-brand text-xs py-1 px-3">ดูอีกครั้ง</a>
+              <a href="#/quiz/${course.id}" class="btn-outline-brand !border-blue-500 !text-blue-500 hover:!bg-blue-500/10 text-xs py-1 px-3">ทำ Quiz</a>
+              <a href="#/certificate/${course.id}" class="btn-outline-brand !border-yellow-500 !text-yellow-500 hover:!bg-yellow-500/10 text-xs py-1 px-3">ใบประกาศ</a>
             </div>
           </div>
         </div>`;

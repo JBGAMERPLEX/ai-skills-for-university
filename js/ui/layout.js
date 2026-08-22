@@ -65,13 +65,13 @@ function updateNavbarUI() {
     }[currentProfile.role] || '';
 
     const dashboardLinkDesktop = currentProfile.role === 'content_creator'
-      ? `<a id="creator-link" href="#/creator" class="block px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 rounded-md">แดชบอร์ด</a>`
+      ? `<a id="creator-link" href="#/creator" class="block px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 rounded-md">แดชบอร์ดผู้สร้าง</a>`
       : (currentProfile.role === 'content_manager'
         ? `<a id="manager-link" href="#/manager" class="block px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 rounded-md">ตรวจสอบคอร์ส</a>`
         : '');
 
     const dashboardLinkMobile = currentProfile.role === 'content_creator'
-      ? `<a href="#/creator" class="block py-2 text-sm text-gray-400 hover:text-white">แดชบอร์ด</a>`
+      ? `<a href="#/creator" class="block py-2 text-sm text-gray-400 hover:text-white">แดชบอร์ดผู้สร้าง</a>`
       : (currentProfile.role === 'content_manager'
         ? `<a href="#/manager" class="block py-2 text-sm text-gray-400 hover:text-white">ตรวจสอบคอร์ส</a>`
         : '');
@@ -86,7 +86,7 @@ function updateNavbarUI() {
           ${avatarHTML}
           <span class="hidden sm:inline font-medium">${escapeHTML(currentProfile.full_name || currentUser.email)}</span>
         </button>
-        <div id="user-dropdown" class="absolute right-0 mt-1 w-52 bg-gray-900 border border-gray-800 rounded-lg shadow-lg p-1.5 z-50 hidden text-sm">
+        <div id="user-dropdown" class="absolute right-0 mt-1 w-56 bg-gray-900 border border-gray-800 rounded-lg shadow-lg p-1.5 z-50 hidden text-sm">
           <span class="block text-xs text-gray-500 px-2 py-1">${escapeHTML(roleLabel)}</span>
           <a href="#/my-courses" class="block px-2 py-1.5 text-gray-300 hover:bg-gray-800 rounded-md">คอร์สของฉัน</a>
           ${dashboardLinkDesktop}
@@ -141,7 +141,7 @@ function updateNavbarUI() {
     document.getElementById('mobile-menu').classList.toggle('hidden');
   });
 
-  // ปิดเมนูมือถือเมื่อแตะลิงก์หรือปุ่ม
+  // ปิดเมนูมือถือเมื่อแตะลิงก์
   document.querySelectorAll('#mobile-menu a, #mobile-menu button').forEach(el => {
     el.addEventListener('click', () => {
       document.getElementById('mobile-menu').classList.add('hidden');
@@ -169,17 +169,18 @@ function updateNavbarUI() {
     btn.addEventListener('click', () => navigate('/register'));
   });
 
-  // ✅ Logout buttons (ทั้ง desktop และ mobile)
-  document.querySelectorAll('.logout-btn').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
+  // Logout – event delegation
+  document.addEventListener('click', async (e) => {
+    const logoutBtn = e.target.closest('.logout-btn');
+    if (logoutBtn) {
       e.preventDefault();
       await signOut();
       window.dispatchEvent(new Event('auth-change'));
       navigate('/home');
-    });
+    }
   });
 
-  // Event listeners อื่น ๆ สำหรับผู้ใช้ที่ล็อกอิน
+  // Event listeners อื่น ๆ
   if (currentUser) {
     document.getElementById('profile-link')?.addEventListener('click', (e) => {
       e.preventDefault();

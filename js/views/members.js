@@ -1,8 +1,9 @@
+// js/views/members.js
 import { getSupabaseClient } from '../services/supabase.js';
 
 export async function render(container) {
   container.innerHTML = `
-    <div class="fade-up">
+    <div class="fade-up max-w-5xl mx-auto">
       <h2 class="text-3xl font-bold text-white mb-8">สมาชิกทั้งหมด</h2>
       <div id="members-container">
         <div class="text-center py-10">
@@ -38,7 +39,7 @@ async function loadMembers() {
       if (grouped[user.role]) {
         grouped[user.role].push(user);
       } else {
-        grouped.learner.push(user); // fallback
+        grouped.learner.push(user);
       }
     });
 
@@ -55,12 +56,13 @@ async function loadMembers() {
       if (members.length === 0) return;
 
       html += `
-        <div class="mb-10">
-          <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-white mb-3 flex items-center gap-2">
             <i class="bi ${section.icon} ${section.color}"></i> ${section.title}
             <span class="text-sm text-gray-400 font-normal">(${members.length})</span>
           </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <!-- ✅ ใช้ grid แนวตั้ง หรือ grid แนวนอน ตามต้องการ -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             ${members.map(user => {
               const initials = user.full_name
                 ? user.full_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
@@ -68,32 +70,22 @@ async function loadMembers() {
               const avatarUrl = user.avatar_url || `https://ui-avatars.com/api/?name=${initials}&background=f9754a&color=fff&size=100`;
 
               // Stats based on role
-              let statsHTML = '';
+              let statsText = '';
               if (user.role === 'learner') {
-                // แสดงเฉพาะจำนวนคอร์สที่เรียนจบ
-                statsHTML = `
-                  <div class="text-xs text-gray-400 mt-1">
-                    <span class="block">✅ เรียนจบ ${user.completed_courses} คอร์ส</span>
-                  </div>`;
+                statsText = `✅ ${user.completed_courses} คอร์ส`;
               } else if (user.role === 'content_creator') {
-                statsHTML = `
-                  <div class="text-xs text-gray-400 mt-1">
-                    <span class="block">📖 เผยแพร่แล้ว ${user.published_courses} คอร์ส</span>
-                  </div>`;
+                statsText = `📖 ${user.published_courses} คอร์ส`;
               } else if (user.role === 'content_manager') {
-                statsHTML = `
-                  <div class="text-xs text-gray-400 mt-1">
-                    <span class="block">✔️ อนุมัติแล้ว ${user.reviewed_published_courses} คอร์ส</span>
-                  </div>`;
+                statsText = `✔️ ${user.reviewed_published_courses} คอร์ส`;
               }
 
               return `
-                <div class="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center hover:border-gray-700 transition">
+                <div class="bg-gray-900 border border-gray-800 rounded-xl p-3 text-center hover:border-gray-700 transition">
                   <img src="${escapeHTML(avatarUrl)}" alt="${escapeHTML(user.full_name || 'User')}" 
-                       class="w-16 h-16 rounded-full object-cover mx-auto mb-2 border-2 border-gray-700" />
-                  <p class="text-white text-sm font-medium line-clamp-1">${escapeHTML(user.full_name || 'ไม่ระบุชื่อ')}</p>
-                  <p class="text-xs text-gray-400">${roleLabel(user.role)}</p>
-                  ${statsHTML}
+                       class="w-14 h-14 rounded-full object-cover mx-auto mb-2 border border-gray-700" />
+                  <p class="text-white text-xs font-medium line-clamp-1">${escapeHTML(user.full_name || 'ไม่ระบุชื่อ')}</p>
+                  <p class="text-gray-400 text-xs mt-0.5">${roleLabel(user.role)}</p>
+                  <p class="text-gray-500 text-xs mt-1">${statsText}</p>
                 </div>`;
             }).join('')}
           </div>
