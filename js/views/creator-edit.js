@@ -55,10 +55,13 @@ async function resetToDraftIfRevision() {
 function renderEditor(container, course, sections) {
   container.innerHTML = `
     <div class="fade-up max-w-4xl mx-auto">
-      <div class="flex items-center gap-3 mb-6">
-        <button id="back-btn" class="p-2 text-gray-400 hover:text-white"><i class="bi bi-arrow-left text-2xl"></i></button>
-        <h2 class="text-2xl font-bold text-white">${escapeHTML(course.title)}</h2>
-      </div>
+<div class="flex items-center gap-3 mb-6 flex-wrap">
+  <button id="back-btn" class="p-2 text-gray-400 hover:text-white"><i class="bi bi-arrow-left text-2xl"></i></button>
+  <h2 class="text-2xl font-bold text-white flex-1">${escapeHTML(course.title)}</h2>
+  <a href="#/quiz-manager/${courseId}" class="btn-outline-brand text-sm py-2 px-4">
+    <i class="bi bi-pencil-square"></i> จัดการ Quiz
+  </a>
+</div>
 
       ${course.status === 'revision' && (course.review_comment || course.reviewed_by) ? `
         <div class="bg-gray-800 border-l-4 border-yellow-500 p-4 rounded-lg mb-4">

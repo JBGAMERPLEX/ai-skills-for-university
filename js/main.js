@@ -28,6 +28,8 @@ import { render as teamView } from './views/team.js';
 import { render as forgotPasswordView } from './views/forgot-password.js';
 import { render as changePasswordView } from './views/change-password.js';
 import { render as courseCompleteView } from './views/course-complete.js';
+import { render as discussionView } from './views/discussion.js';
+import { render as quizManagerView } from './views/quiz-manager.js';
 
 // ลบ supabase auth token เก่า (กันชน)
 localStorage.removeItem('sb-uyqpcxnrfueajglwwarp-auth-token');
@@ -44,7 +46,8 @@ registerRoute('/creator/edit/:id', creatorEditView);
 registerRoute('/manager', managerView);
 registerRoute('/manager/review/:id', managerReviewView);
 registerRoute('/complete/:id', courseCompleteView);
-
+registerRoute('/discussion/:id', discussionView);
+registerRoute('/quiz-manager/:id', quizManagerView);
 // Course Preview & Learning
 registerRoute('/course/:id', coursePreviewView);
 registerRoute('/learn/:id', courseDetailView);

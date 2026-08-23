@@ -30,13 +30,13 @@ export async function render(container, params) {
     p_course_id: courseId
   });
 
-  // ✅ เช็กว่าเรียนจบจริงหรือยัง
+  // เช็กว่าเรียนจบจริงหรือยัง
   const { data: hasCompleted } = await supabase.rpc('has_completed_course', {
     p_user_id: currentUser.id,
     p_course_id: courseId
   });
 
-  // ✅ เช็กว่ารีวิวไปแล้วหรือยัง
+  // เช็กว่ารีวิวไปแล้วหรือยัง
   const { data: myReview } = await supabase.rpc('get_user_review', {
     p_user_id: currentUser.id,
     p_course_id: courseId
@@ -55,6 +55,7 @@ export async function render(container, params) {
         <span class="text-white">${escapeHTML(course.title)}</span>
       </nav>
 
+      <!-- ข้อมูลคอร์ส -->
       <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
         <div class="flex flex-col md:flex-row gap-6">
           <img src="${escapeHTML(course.thumbnail_url || 'https://ui-avatars.com/api/?name=Course&background=f9754a&color=fff&size=400')}" 
@@ -87,7 +88,11 @@ export async function render(container, params) {
           </div>
         </div>
 
-        <div class="mt-6 flex justify-end">
+        <!-- ปุ่มสมัครเรียน / เริ่มเรียน / ถามตอบ -->
+        <div class="mt-6 flex flex-wrap gap-3 justify-end">
+          <a href="#/discussion/${course.id}" class="btn-outline-brand text-sm py-2 px-4 inline-flex items-center gap-2">
+            <i class="bi bi-chat-dots"></i> ถาม-ตอบ
+          </a>
           ${enrolled ? `
             <a href="#/learn/${course.id}" class="btn-brand text-lg px-8 py-3 gap-2 inline-flex items-center">
               <i class="bi bi-play-circle-fill"></i> เริ่มเรียน
@@ -99,10 +104,11 @@ export async function render(container, params) {
       </div>
 
       <!-- รีวิว -->
-      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-        <h2 class="text-xl font-bold text-white mb-6">รีวิวจากผู้เรียน</h2>
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 mb-6">
+        <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <i class="bi bi-star text-yellow-400"></i> รีวิวจากผู้เรียน
+        </h2>
 
-        <!-- เงื่อนไขการแสดงฟอร์ม -->
         ${!hasCompleted ? `
           <div class="bg-gray-800 rounded-lg p-6 text-center mb-6">
             <i class="bi bi-lock text-3xl text-gray-500"></i>
@@ -175,6 +181,20 @@ export async function render(container, params) {
               <p class="text-gray-300 text-sm">${escapeHTML(review.comment || '')}</p>
             </div>
           `).join('')}
+        </div>
+      </div>
+
+      <!-- ถาม-ตอบล่าสุด -->
+      <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i class="bi bi-chat-dots text-blue-400"></i> ถาม-ตอบ
+          </h2>
+          <a href="#/discussion/${course.id}" class="text-brand text-sm hover:underline">ดูทั้งหมด</a>
+        </div>
+        <div class="text-center py-4">
+          <p class="text-gray-500 text-sm">เข้าไปตั้งคำถามเกี่ยวกับคอร์สได้ในหน้านี้</p>
+          <a href="#/discussion/${course.id}" class="btn-outline-brand text-sm py-2 px-4 inline-flex mt-3">เปิดห้องสนทนา</a>
         </div>
       </div>
     </div>`;

@@ -1,7 +1,6 @@
 // js/views/catalog.js
 import { getSession } from '../services/auth.js';
 import { getSupabaseClient } from '../services/supabase.js';
-import { navigate } from '../utils/router.js';
 
 let currentUser = null;
 let currentSort = 'newest';
